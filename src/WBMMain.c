@@ -9,7 +9,7 @@ WBMMain.c
 balazs.fekete@unh.edu
 
 *******************************************************************************/
-#include "wbm.h"
+#include <wbm.h>
 
 enum { MDpet, MDsurplus, MDinfiltration, MDrunoff, MDdischarge,  MDwatertemp, MDthermal, MDbalance, MDgeometry, MDbgc, MDbgc_DIN, MDbgc_DINPLUSBIOMASS, MDbgc_DOC, MDfecal};
 
