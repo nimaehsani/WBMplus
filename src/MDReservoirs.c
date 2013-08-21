@@ -322,14 +322,15 @@ static void _MDReservoirNeuralNet (int itemID) {
 		lastmonth = MFVarGetFloat (_MDOutLastMonthID,    itemID, 0.0);
 		mtdInflow = MFVarGetFloat (_MDOutMonthToDayInFlowID,    itemID, 0.0);
 		if (lastmonth == m) {
-			mtdInflow = mtdInflow + MFVarGetFloat (_MDInDischMTDID,    itemID, discharge);
+			//mtdInflow = mtdInflow + MFVarGetFloat (_MDInDischMTDID,    itemID, discharge);
+                        mtdInflow   = mtdInflow + discharge
 			avmtdInflow = mtdInflow/d;
 		}
 		else {
 			avmtdInflow = discharge;
 		}
-		MFVarSetFloat (_MDOutMonthToDayInFlowID,    itemID, avmtdInflow);
-
+		//MFVarSetFloat (_MDOutMonthToDayInFlowID,    itemID, avmtdInflow);
+                MFVarSetFloat (_MDOutMonthToDayInFlowID,    itemID, avmtdInflow*d);
 
 		// Discharge and Release Are Standardized [0, 1]  
 		/*
@@ -392,14 +393,15 @@ static void _MDReservoirNeuralNet (int itemID) {
 
 		mtdRelease = MFVarGetFloat (_MDOutMonthToDayReleaseID,    itemID, 0.0);
 		if (lastmonth == m) {
-			mtdRelease = mtdRelease + MFVarGetFloat (_MDInDischMTDID,    itemID, SIMOUT);
+			// mtdRelease = mtdRelease + MFVarGetFloat (_MDInDischMTDID,    itemID, SIMOUT);
+                        mtdRelease   = mtdRelease + SIMOUT;
 			avmtdRelease = mtdRelease/d;
 		}
 		else {
 			avmtdRelease = SIMOUT;
 		}
-		MFVarSetFloat (_MDOutMonthToDayReleaseID,    itemID, avmtdRelease);
-
+		//MFVarSetFloat (_MDOutMonthToDayReleaseID,    itemID, avmtdRelease);
+                MFVarSetFloat (_MDOutMonthToDayReleaseID,    itemID, avmtdRelease*d);
 		}
 
 
