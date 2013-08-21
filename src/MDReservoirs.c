@@ -514,7 +514,7 @@ int MDReservoirDef () {
 			    (MFModelAddFunction (_MDReservoirDW) == CMfailed)) return (CMfailed);
 			break;
         case MDneuralnet:
-			if (((_MDInDischMeanID      = MDDischMeanDef ())   == CMfailed) ||
+			if (//((_MDInDischMeanID      = MDDischMeanDef ())   == CMfailed) ||
                             ((_MDInDischargeID      = MDDischLevel2Def ()) == CMfailed) ||
 			    ((_MDInResCapacityID    = MFVarGetID (MDVarReservoirCapacity,      "m3",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
 			    ((_MDInDischMTDID    = MFVarGetID (MDVarDischMTD ,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
