@@ -213,7 +213,9 @@ extern "C" {
 #define MDVarRainSurfRunoff                  "RainSurfRunoff"
 #define MDVarRainTranspiration               "RainTranspiration"
 #define MDVarRainWaterSurplus                "RainWaterSurplus"
-
+    
+// NIMA Neural Network 
+    
 #define MDVarReservoirStorageChange             "ReservoirStorageCahnge"
 #define MDVarReservoirCapacity                  "ResrvoirCapacity"
 #define MDVarReservoirStorage                   "ReservoirStorage"
@@ -236,6 +238,7 @@ extern "C" {
 #define MDVarLastMonth                          "LastMonth"
 #define MDVarMonthToDayInFlow                   "TotalReservoirInflowUpToDate"
 #define MDVarMonthToDayRelease                  "TotalReservoirReleaseUpToDate"
+#define MDVarReservoirRelease                   "ReservoirRelease"
 
 #define MDVarRelHumidity                     "RelativeHumidity"
 #define MDVarRelSoilMoisture                 "RelativeSoilMoisture"	
