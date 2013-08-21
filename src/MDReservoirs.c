@@ -230,8 +230,8 @@ static void _MDReservoirNeuralNet (int itemID) {
 
 	// Parameters
 	float drySeasonPct = 0.60;	// RJS 071511
-	float wetSeasonPct = 0.16;	// RJS 071511
-	float year = 0;				// RJS 082311 */
+	float wetSeasonPct = 0.16;	// RJS 071511  */
+	float year = 0;				// RJS 082311 
 
 	discharge     = MFVarGetFloat (_MDInDischargeID,    itemID, 0.0);
 	meanDischarge = MFVarGetFloat (_MDInDischMeanID,    itemID, discharge);
@@ -514,41 +514,12 @@ int MDReservoirDef () {
 			    (MFModelAddFunction (_MDReservoirDW) == CMfailed)) return (CMfailed);
 			break;
         case MDneuralnet:
-            
-            
-            // Input
-static int _MDInDischargeID      = MFUnset;
-static int _MDInDischMeanID      = MFUnset;
-static int _MDInResCapacityID    = MFUnset;
-static int _MDInDischMTDID       = MFUnset;
-
-// Output
-static int _MDOutResStorageID      = MFUnset;
-static int _MDOutResStorageChgID   = MFUnset;
-static int _MDOutResReleaseID      = MFUnset;
-static int _MDOutResRelease_t_1_ID = MFUnset;
-static int _MDOutResRelease_t_2_ID = MFUnset;
-static int _MDOutResRelease_t_3_ID = MFUnset;
-static int _MDOutDisch_t_1_ID	   = MFUnset;
-static int _MDOutDisch_t_2_ID      = MFUnset;
-static int _MDOutDisch_t_3_ID      = MFUnset;
-static int _MDOutDischMinID        = MFUnset; // -MDIn or MDOut? Value Updates in Each State and should be Used in Next Step
-static int _MDOutDischMaxID        = MFUnset; // ...
-static int _MDOutReleaseMinID      = MFUnset; // ...
-static int _MDOutReleaseMaxID      = MFUnset; // ...
-static int _MDOutLastMonthID	   = MFUnset;
-static int _MDOutMonthToDayInFlowID= MFUnset;
-static int _MDOutMonthToDayReleaseID= MFUnset;
-static int _MDOutReservoirReleaseID= MFUnset;
-
-
-
 			if (((_MDInDischMeanID      = MDDischMeanDef ())   == CMfailed) ||
                             ((_MDInDischargeID      = MDDischLevel2Def ()) == CMfailed) ||
 			    ((_MDInResCapacityID    = MFVarGetID (MDVarReservoirCapacity,      "m3",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
 			    ((_MDInDischMTDID    = MFVarGetID (MDVarDischMTD ,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
-                            ((_MDInDischMinID    = MFVarGetID (MDVarDischargeMin,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
-			    ((_MDInDischMaxID    = MFVarGetID (MDVarDischargeMax,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
+                            //((_MDInDischMinID    = MFVarGetID (MDVarDischargeMin,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
+			    //((_MDInDischMaxID    = MFVarGetID (MDVarDischargeMax,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
                             ((_MDOutDisch_t_1_ID     = MFVarGetID(MDVarDisch_t_1_ ,      "m3/s",  MFOutput, MFState, MFInitial)) == CMfailed) ||
                             ((_MDOutDisch_t_2_ID     = MFVarGetID(MDVarDisch_t_2_ ,      "m3/s",  MFOutput, MFState, MFInitial)) == CMfailed) ||
                             ((_MDOutDisch_t_3_ID     = MFVarGetID(MDVarDisch_t_3_ ,      "m3/s",  MFOutput, MFState, MFInitial)) == CMfailed) || 
