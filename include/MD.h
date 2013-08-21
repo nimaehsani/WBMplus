@@ -99,7 +99,7 @@ extern "C" {
 #define MDVarDischarge0                      "Discharge0"
 #define MDVarDischarge1                      "Discharge1"
 #define MDVarDischObserved                   "DischargeObserved"
-/* #define MDVarDischMean                       "DischargeMean" */
+#define MDVarDischMean                       "DischargeMean"
 
 #define MDVarDischargeMin                    "DischargeMin"
 #define MDVarDischargeMax                    "DischargeMax"
@@ -219,7 +219,7 @@ extern "C" {
 #define MDVarReservoirStorageChange             "ReservoirStorageCahnge"
 #define MDVarReservoirCapacity                  "ResrvoirCapacity"
 #define MDVarReservoirStorage                   "ReservoirStorage"
-#define MDVarDischMean                       "MeanDischarge"
+//#define MDVarDischMean                       "MeanDischarge"
 #define MDVarResCapacity                     "ResrvoirCapacity"
 #define MDVarDischMTD                        "TotalMonthlyDischargeUpTothatDate"
 #define MDVarResStorage                         "ReservoirStorage"
