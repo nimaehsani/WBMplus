@@ -23,7 +23,7 @@ Feb. 2009 DW
 static int _MDInDischargeID      = MFUnset;
 static int _MDInDischMeanID      = MFUnset;
 static int _MDInResCapacityID    = MFUnset;
-static int _MDInDischMTDID       = MFUnset;
+//static int _MDInDischMTDID       = MFUnset;
 
 // Output
 static int _MDOutResStorageID      = MFUnset;
@@ -519,7 +519,7 @@ int MDReservoirDef () {
 			if (//((_MDInDischMeanID      = MDDischMeanDef ())   == CMfailed) ||
                             ((_MDInDischargeID      = MDDischLevel2Def ()) == CMfailed) ||
 			    ((_MDInResCapacityID    = MFVarGetID (MDVarReservoirCapacity,      "m3",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
-			    ((_MDInDischMTDID    = MFVarGetID (MDVarDischMTD ,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
+			    //((_MDInDischMTDID    = MFVarGetID (MDVarDischMTD ,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
                             //((_MDInDischMinID    = MFVarGetID (MDVarDischargeMin,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
 			    //((_MDInDischMaxID    = MFVarGetID (MDVarDischargeMax,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
                             ((_MDOutDisch_t_1_ID     = MFVarGetID(MDVarDisch_t_1_ ,      "m3/s",  MFOutput, MFState, MFInitial)) == CMfailed) ||
