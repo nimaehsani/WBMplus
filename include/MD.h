@@ -214,7 +214,7 @@ extern "C" {
 #define MDVarRainTranspiration               "RainTranspiration"
 #define MDVarRainWaterSurplus                "RainWaterSurplus"
 
-
+#define MDVarReservoirStorageChange             "ReservoirStorageCahnge"
 #define MDVarReservoirCapacity                  "ResrvoirCapacity"
 #define MDVarReservoirStorage                   "ReservoirStorage"
 #define MDVarDischMean                       "MeanDischarge"
