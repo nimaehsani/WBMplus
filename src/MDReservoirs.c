@@ -234,7 +234,7 @@ static void _MDReservoirNeuralNet (int itemID) {
 	float year = 0;				// RJS 082311 
 
 	discharge     = MFVarGetFloat (_MDInDischargeID,    itemID, 0.0);
-	meanDischarge = MFVarGetFloat (_MDInDischMeanID,    itemID, discharge);
+	// meanDischarge = MFVarGetFloat (_MDInDischMeanID,    itemID, discharge);
 	year 		  = MFDateGetCurrentYear();
 
 	if ((resCapacity = MFVarGetFloat (_MDInResCapacityID, itemID, 0.0)) <= 0.0) {
