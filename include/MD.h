@@ -217,7 +217,7 @@ extern "C" {
 // NIMA Neural Network 
     
 #define MDVarReservoirStorageChange             "ReservoirStorageCahnge"
-#define MDVarReservoirCapacity                  "ResrvoirCapacity"
+#define MDVarReservoirCapacity                  "ReservoirCapacity"
 #define MDVarReservoirStorage                   "ReservoirStorage"
 //#define MDVarDischMean                       "MeanDischarge"
 #define MDVarResCapacity                     "ResrvoirCapacity"
