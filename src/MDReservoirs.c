@@ -323,7 +323,7 @@ static void _MDReservoirNeuralNet (int itemID) {
 		mtdInflow = MFVarGetFloat (_MDOutMonthToDayInFlowID,    itemID, 0.0);
 		if (lastmonth == m) {
 			//mtdInflow = mtdInflow + MFVarGetFloat (_MDInDischMTDID,    itemID, discharge);
-                        mtdInflow   = mtdInflow + discharge
+                        mtdInflow   = mtdInflow + discharge;
 			avmtdInflow = mtdInflow/d;
 		}
 		else {
