@@ -300,10 +300,10 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         ANN = ANNOUTPUT(I1, I2, I3) * (release_max - release_min) + release_min;
 
-        if (_MDOutResStorageChgID == MFUnset) {
+        if (_MDOutResStorageID == MFUnset) {
             resStorage = 0.5 * resCapacity;
         } else {
-            MFVarGetFloat(_MDOutResStorageChgID, itemID, resStorage);
+            MFVarGetFloat(_MDOutResStorageID, itemID, 0.0);
         }
         resStorageChg = (discharge - ANN)*3600 * 24;
         minresStorage = resCapacity * 0.25;
@@ -371,7 +371,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         MFVarSetFloat(_MDOutDisch_t_3_ID, itemID, discharge_t_2);
         MFVarSetFloat(_MDOutResRelease_t_2_ID, itemID, res_release_t_1);
         MFVarSetFloat(_MDOutResRelease_t_3_ID, itemID, res_release_t_2);
-        MFVarSetFloat(_MDOutResStorageChgID, itemID, resStorage);
+        MFVarSetFloat(_MDOutResStorageChgID, itemID, resStorageChg);
+        MFVarSetFloat(_MDOutResStorageID, itemID, resStorage);
     }
 
 }
