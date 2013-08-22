@@ -233,6 +233,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     float year = 0; // RJS 082311 
 
     discharge = MFVarGetFloat(_MDInDischargeID, itemID, 0.0);
+    printf("discharge= %f \n", discharge);
     // meanDischarge = MFVarGetFloat (_MDInDischMeanID,    itemID, discharge);
     year = MFDateGetCurrentYear();
 
@@ -310,29 +311,29 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         if (resStorage + resStorageChg < resCapacity && resStorage + resStorageChg > minresStorage) {
             SIMOUT = ANN;
-            if (SIMOUT < 0) {
+/*            if (SIMOUT < 0) {
                 printf("Error: Negative Discharge (1)! \n");
                 printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
             }
-            resStorage = resStorage + resStorageChg;
+*/            resStorage = resStorage + resStorageChg;
         }
 
         if (resStorage + resStorageChg > resCapacity) {
             SIMOUT = ((discharge * 3600 * 24)-(resCapacity - resStorage)) / (3600 * 24);
-            if (SIMOUT < 0) {
+ /*           if (SIMOUT < 0) {
                 printf("Error: Negative Discharge (2)! \n");
                 printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
-            }
-            resStorage = resCapacity;
+          }
+*/            resStorage = resCapacity;
         }
 
         if (resStorage + resStorageChg < minresStorage) {
             SIMOUT = (resStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
-            if (SIMOUT < 0) {
+ /*           if (SIMOUT < 0) {
                 printf("Error: Negative Discharge (3)! \n");
                 printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
             }
-            resStorage = minresStorage;
+*/            resStorage = minresStorage;
         }
 
         mtdRelease = MFVarGetFloat(_MDOutMonthToDayReleaseID, itemID, 0.0);
