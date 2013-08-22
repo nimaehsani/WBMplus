@@ -330,7 +330,7 @@ static void _MDReservoirNeuralNet(int itemID) {
             SIMOUT = (resStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
             if (SIMOUT < 0) {
                 printf("Error: Negative Discharge (3)! \n");
-                printf("%f \n", SIMOUT);
+                printf("%f %f %f %f \n", SIMOUT, resStorage, minresStorage, discharge);
             }
             resStorage = minresStorage;
         }
