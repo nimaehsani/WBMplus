@@ -357,7 +357,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         }
         res_release_t_1 = resRelease ; // (avmtdRelease - release_min) / (release_max - release_min);
         
-        MFVarSetFloat(MDOutResReleaseID, itemID, resRelease);
+        MFVarSetFloat(_MDOutResReleaseID, itemID, resRelease);
         MFVarSetFloat(_MDOutLastMonthID, itemID, m);
         MFVarSetFloat(_MDOutReleaseMaxID, itemID, release_max);
         MFVarSetFloat(_MDOutReleaseMinID, itemID, release_min);
@@ -429,7 +429,7 @@ static void _MDReservoirDW(int itemID) {
 
     MFVarSetFloat(_MDOutResStorageID, itemID, resStorage);
     MFVarSetFloat(_MDOutResStorageChgID, itemID, resStorageChg);
-    MFVarSetFloat(-MDOutResReleaseID, itemID, resRelease);
+    MFVarSetFloat(_MDOutResReleaseID, itemID, resRelease);
 }
 
 enum {
