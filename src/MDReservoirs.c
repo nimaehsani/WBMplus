@@ -248,11 +248,11 @@ static void _MDReservoirNeuralNet(int itemID) {
         discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID, 0.0);
         discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 0.0);
 
-       // discharge_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, 0.0);
-       // discharge_max = MFVarGetFloat(_MDOutReleaseMaxID, itemID, 0.0);
+        // discharge_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, 0.0);
+        // discharge_max = MFVarGetFloat(_MDOutReleaseMaxID, itemID, 0.0);
 
-       // discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 0.0);
-       // discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID, 0.0);
+        // discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 0.0);
+        // discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID, 0.0);
         if (discharge < discharge_min) { // Chekking MAx-Min Flow Into Reservoir
             discharge_min = discharge;
         } else {
@@ -311,29 +311,28 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         if (resStorage + resStorageChg < resCapacity && resStorage + resStorageChg > minresStorage) {
             SIMOUT = ANN;
-/*            if (SIMOUT < 0) {
-                printf("Error: Negative Discharge (1)! \n");
-                printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
-            }
-*/            resStorage = resStorage + resStorageChg;
-        }
-
-        if (resStorage + resStorageChg > resCapacity) {
-            SIMOUT = ((discharge * 3600 * 24)-(resCapacity - resStorage)) / (3600 * 24);
- /*           if (SIMOUT < 0) {
-                printf("Error: Negative Discharge (2)! \n");
-                printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
-          }
-*/            resStorage = resCapacity;
-        }
-
-        if (resStorage + resStorageChg < minresStorage) {
-            SIMOUT = (resStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
- /*           if (SIMOUT < 0) {
-                printf("Error: Negative Discharge (3)! \n");
-                printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
-            }
-*/            resStorage = minresStorage;
+                        if (SIMOUT < 0) {
+                            printf("Error: Negative Discharge (1)! \n");
+                            printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
+                        }
+              resStorage = resStorage + resStorageChg;
+        } else {
+            if (resStorage + resStorageChg > resCapacity) {
+                SIMOUT = ((discharge * 3600 * 24)-(resCapacity - resStorage)) / (3600 * 24);
+                           if (SIMOUT < 0) {
+                               printf("Error: Negative Discharge (2)! \n");
+                               printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
+                         }
+                  resStorage = resCapacity;
+            } else {
+               //  (resStorage + resStorageChg < minresStorage) {
+                   SIMOUT = (resStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
+                           if (SIMOUT < 0) {
+                               printf("Error: Negative Discharge (3)! \n");
+                               printf("%f %f %f %f %f %f\n", SIMOUT, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
+                           }
+                  resStorage = minresStorage;
+                   }
         }
 
         mtdRelease = MFVarGetFloat(_MDOutMonthToDayReleaseID, itemID, 0.0);
