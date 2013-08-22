@@ -402,7 +402,8 @@ static void _MDReservoirNeuralNet (int itemID) {
 		}
 		//MFVarSetFloat (_MDOutMonthToDayReleaseID,    itemID, avmtdRelease);
                 MFVarSetFloat (_MDOutMonthToDayReleaseID,    itemID, avmtdRelease*d);
-		}
+                
+		//     }
 
 
 		resRelease = SIMOUT;
@@ -431,6 +432,7 @@ static void _MDReservoirNeuralNet (int itemID) {
 		MFVarSetFloat(_MDOutResRelease_t_2_ID, itemID, res_release_t_1);
 		MFVarSetFloat(_MDOutResRelease_t_3_ID, itemID, res_release_t_2);
 		MFVarSetFloat (_MDOutResStorageChgID,    itemID, resStorage);
+        }
 
 }
 
