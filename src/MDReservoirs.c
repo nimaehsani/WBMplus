@@ -303,7 +303,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         if (_MDOutResStorageID == MFUnset) {
             resStorage = 0.5 * resCapacity;
         } else {
-            MFVarGetFloat(_MDOutResStorageID, itemID, 0.0);
+            resStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.0);
         }
         resStorageChg = (discharge - ANN)*3600 * 24;
         minresStorage = resCapacity * 0.25;
