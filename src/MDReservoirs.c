@@ -370,7 +370,7 @@ static void _MDReservoirNeuralNet (int itemID) {
 		if (resStorage + resStorageChg < resCapacity && resStorage + resStorageChg > minresStorage) {
                         SIMOUT=ANN;
                         if (SIMOUT<0){
-                            printf("Error: Negative Discharge!\n");
+                            printf("Error: Negative Discharge! 1\n");
                         }
                         resStorage=resStorage+resStorageChg;
 		}
@@ -378,7 +378,7 @@ static void _MDReservoirNeuralNet (int itemID) {
 		if (resStorage+resStorageChg>resCapacity) {
 			SIMOUT=((discharge*3600*24)-(resCapacity-resStorage))/(3600*24);
 			if (SIMOUT<0){
-				printf("Error: Negative Discharge!\n");
+				printf("Error: Negative Discharge! 2\n");
 			}
 			resStorage=resCapacity; 
 		}
@@ -386,7 +386,7 @@ static void _MDReservoirNeuralNet (int itemID) {
 		if (resStorage+resStorageChg <  minresStorage){
 			SIMOUT=(resStorage-minresStorage+(discharge*3600*24))/(3600*24);
 			if (SIMOUT<0){
-				printf("Error: Negative Discharge!\n");
+				printf("Error: Negative Discharge! 3\n");
 			}
 			resStorage=minresStorage;
 		}
