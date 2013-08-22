@@ -247,8 +247,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         //		if (itemID == 25014) printf("@@@ m= %d, d= %d, balance = %f, resCapacity = %f, Q = %f, meanQ = %f, resRelease = %f, resStorage = %f, prevResStorage = %f\n", MFDateGetCurrentMonth(), MFDateGetCurrentDay(), balance, resCapacity, discharge, meanDischarge, resRelease, resStorage*1000000000, prevResStorage*1000000000);
         return;
     } else {
-        discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID,0.2);
-        discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 0.04);
+        discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID,0.04);
+        discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 0.2);
 
         // discharge_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, 0.0);
         // discharge_max = MFVarGetFloat(_MDOutReleaseMaxID, itemID, 0.0);
