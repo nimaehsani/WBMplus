@@ -347,7 +347,12 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         //     }
 
-        resRelease = SIMOUT;
+        if (SIMOUT) >0 {
+            resRelease = SIMOUT;
+        } else { 
+            resRelease = 0.01;
+        }
+        
         //
         if (resRelease < release_min) { // Chekking MAx-Min Release  From Reservoir
             release_min = resRelease;
