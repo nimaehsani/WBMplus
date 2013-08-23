@@ -233,7 +233,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     float year = 0; // RJS 082311 
 
     discharge = MFVarGetFloat(_MDInDischargeID, itemID, 0.0);
-    if (discharge < 0 ) {
+    if (discharge < 0) {
         printf("Negative discharge= %f \n", discharge);
     }
     // meanDischarge = MFVarGetFloat (_MDInDischMeanID,    itemID, discharge);
@@ -248,7 +248,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         return;
     } else {
         resCapacity = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
-        discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID,1);
+        discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID, 1);
         discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 2);
 
         // discharge_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, 0.0);
@@ -256,7 +256,7 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         // discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 0.0);
         // discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID, 0.0);
-        if (discharge>0 && discharge < discharge_min) { // Chekking MAx-Min Flow Into Reservoir
+        if (discharge > 0 && discharge < discharge_min) { // Chekking MAx-Min Flow Into Reservoir
             discharge_min = discharge;
         } else {
             if (discharge > discharge_max) {
@@ -301,8 +301,8 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         ANN = ANNOUTPUT(I1, I2, I3) * (release_max - release_min) + release_min;
 
-            resStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.5*resCapacity);
-        
+        resStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.5 * resCapacity);
+
         resStorageChg = (discharge - ANN)*3600 * 24;
         minresStorage = resCapacity * 0.1;
 
@@ -311,7 +311,7 @@ static void _MDReservoirNeuralNet(int itemID) {
             if (SIMOUT < 0) {
                 printf("Error: Negative release (1)! \n");
                 printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
-            }                           //  -2.485446 697241.6875 1142204.125 249713.500000  285551.031250   0.404757
+            } //  -2.485446 697241.6875 1142204.125 249713.500000  285551.031250   0.404757
             resStorage = resStorage + resStorageChg;
         } else {
             if (resStorage + resStorageChg > resCapacity) {
@@ -345,22 +345,24 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         //     }
 
-        if (SIMOUT >0 ) {
+        if (SIMOUT > 0) {
             resRelease = SIMOUT;
-        } else { 
+        } else {
             resRelease = 0.01;
         }
-        
+
         //
-        if (resRelease < release_min) { // Chekking MAx-Min Release  From Reservoir
-            release_min = resRelease;
-        } else {
-            if (resRelease > release_max) {
-                release_max = resRelease;
+        if (SIMOUT > 0) {
+            if (resRelease < release_min) { // Chekking MAx-Min Release  From Reservoir
+                release_min = resRelease;
+            } else {
+                if (resRelease > release_max) {
+                    release_max = resRelease;
+                }
             }
         }
-        res_release_t_1 = resRelease ; // (avmtdRelease - release_min) / (release_max - release_min);
-        
+        res_release_t_1 = resRelease; // (avmtdRelease - release_min) / (release_max - release_min);
+
         MFVarSetFloat(_MDOutResReleaseID, itemID, resRelease);
         MFVarSetFloat(_MDOutLastMonthID, itemID, m);
         MFVarSetFloat(_MDOutReleaseMaxID, itemID, release_max);
