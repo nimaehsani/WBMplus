@@ -247,6 +247,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         //		if (itemID == 25014) printf("@@@ m= %d, d= %d, balance = %f, resCapacity = %f, Q = %f, meanQ = %f, resRelease = %f, resStorage = %f, prevResStorage = %f\n", MFDateGetCurrentMonth(), MFDateGetCurrentDay(), balance, resCapacity, discharge, meanDischarge, resRelease, resStorage*1000000000, prevResStorage*1000000000);
         return;
     } else {
+        resCapacity = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
         discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID,1);
         discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 2);
 
@@ -300,13 +301,10 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         ANN = ANNOUTPUT(I1, I2, I3) * (release_max - release_min) + release_min;
 
-        if (_MDOutResStorageID == MFUnset) {
-            resStorage = 0.5 * resCapacity;
-        } else {
-            resStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.0);
-        }
+            resStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.5*resCapacity);
+        
         resStorageChg = (discharge - ANN)*3600 * 24;
-        minresStorage = resCapacity * 0.25;
+        minresStorage = resCapacity * 0.1;
 
         if (resStorage + resStorageChg < resCapacity && resStorage + resStorageChg > minresStorage) {
             SIMOUT = ANN;
