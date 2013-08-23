@@ -248,7 +248,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         return;
     } else {
         discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID,1);
-        discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 1);
+        discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 2);
 
         // discharge_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, 0.0);
         // discharge_max = MFVarGetFloat(_MDOutReleaseMaxID, itemID, 0.0);
@@ -265,8 +265,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         MFVarSetFloat(_MDOutDischMaxID, itemID, discharge_max);
         MFVarSetFloat(_MDOutDischMinID, itemID, discharge_min);
 
-        release_max = MFVarGetFloat(_MDOutReleaseMaxID, itemID, discharge_max);
-        release_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, discharge_min);
+        release_max = MFVarGetFloat(_MDOutReleaseMaxID, itemID, 2);
+        release_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, 1);
 
         lastmonth = MFVarGetFloat(_MDOutLastMonthID, itemID, 0.0);
         mtdInflow = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0);
@@ -347,7 +347,7 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         //     }
 
-        if (SIMOUT) >0 {
+        if (SIMOUT >0 ) {
             resRelease = SIMOUT;
         } else { 
             resRelease = 0.01;
