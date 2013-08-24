@@ -275,6 +275,9 @@ static void _MDReservoirNeuralNet(int itemID) {
         I3 = m;
 
         ANN = ANNOUTPUT(I1, I2, I3) * (release_max - release_min) + release_min;
+        if (ANN != ANN){
+            ANN=0.00001;
+        }
 
         prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, resCapacity);
 
