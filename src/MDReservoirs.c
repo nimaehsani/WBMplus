@@ -248,8 +248,14 @@ static void _MDReservoirNeuralNet(int itemID) {
  
         release_max = MFVarGetFloat(_MDOutReleaseMaxID,       itemID, 0.9);
         release_min = MFVarGetFloat(_MDOutReleaseMinID,       itemID, 0.8);
-        lastmonth   = MFVarGetFloat(_MDOutLastMonthID,        itemID, 0.0);
-        mtdInflow   = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0);
+        lastmonth   = MFVarGetFloat(_MDOutLastMonthID,        itemID, 1.0);
+        mtdInflow   = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0002);
+        if(m==0){
+            m=1;
+        }
+        if (d==0){
+            d=1;
+        }
         if (lastmonth == m) {
             mtdInflow   = mtdInflow + discharge;
             avmtdInflow = mtdInflow / d;
@@ -262,11 +268,26 @@ static void _MDReservoirNeuralNet(int itemID) {
         // Discharge and Release Are Standardized [0, 1]  
 
         discharge_t_1   = (avmtdInflow - discharge_min) / (discharge_max - discharge_min); // This Month
-        discharge_t_2   = MFVarGetFloat(_MDOutDisch_t_2_ID,      itemID, 0.001); // Last Month
-        discharge_t_3   = MFVarGetFloat(_MDOutDisch_t_3_ID,      itemID, 0.002); // Two Month Ago
-        res_release_t_2 = MFVarGetFloat(_MDOutResRelease_t_2_ID, itemID, 0.001); // Last Month
-        res_release_t_3 = MFVarGetFloat(_MDOutResRelease_t_3_ID, itemID, 0.002); // Two Month Ago
-
+        if (discharge_t_1 == 0){
+            discharge_t_1=0.0001;
+        }
+        discharge_t_2   = MFVarGetFloat(_MDOutDisch_t_2_ID,      itemID, 0.0001); // Last Month
+        if (discharge_t_2 == 0){
+            discharge_t_2=0.0001;
+        }
+        discharge_t_3   = MFVarGetFloat(_MDOutDisch_t_3_ID,      itemID, 0.0001); // Two Month Ago
+        if (discharge_t_3 == 0){
+            discharge_t_3=0.0001;
+        }
+        res_release_t_2 = MFVarGetFloat(_MDOutResRelease_t_2_ID, itemID, 0.0001); // Last Month
+        if (res_release_t_2 == 0){
+            res_release_t_2=0.0001;
+        }
+        res_release_t_3 = MFVarGetFloat(_MDOutResRelease_t_3_ID, itemID, 0.0001); // Two Month Ago
+        if (res_release_t_3 == 0){
+            res_release_t_3=0.0001;
+        }
+        
         I1[0][0] = discharge_t_3;
         I1[1][0] = discharge_t_2;
         I1[2][0] = discharge_t_1;
@@ -275,6 +296,9 @@ static void _MDReservoirNeuralNet(int itemID) {
         I2[1][0] = res_release_t_2;
 
         I3 = m;
+        if (m==0){
+            m=2;
+        }
         printf ("First Input: I1 \n");
         printf ("%f \n",I1[0][0]);
         printf ("%f \n",I1[1][0]);
