@@ -268,7 +268,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         // Discharge and Release Are Standardized [0, 1]  
 
         discharge_t_1   = (avmtdInflow - discharge_min) / (discharge_max - discharge_min); // This Month
-        if (discharge_t_1 == 0){
+        if (discharge_t_1 == 0 || discharge_t_1 != discharge_t_1){
             discharge_t_1=0.0001;
         }
         discharge_t_2   = MFVarGetFloat(_MDOutDisch_t_2_ID,      itemID, 0.0001); // Last Month
@@ -297,7 +297,7 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         I3 = m;
         if (m==0){
-            m=2;
+            I3=2;
         }
         printf ("First Input: I1 \n");
         printf ("%f \n",I1[0][0]);
