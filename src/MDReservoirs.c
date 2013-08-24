@@ -430,7 +430,7 @@ int MDReservoirDef() {
             break;
         case MDneuralnet:
             if (    ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
-                    ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed)
+                    ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_3_ID        = MFVarGetID(MDVarDisch_t_3_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
