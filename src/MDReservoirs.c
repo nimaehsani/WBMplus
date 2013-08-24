@@ -480,7 +480,7 @@ int MDReservoirDef() {
                     ((_MDOutMonthToDayInFlowID  = MFVarGetID(MDVarMonthToDayInFlow,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutReservoirReleaseID  = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
                     ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
