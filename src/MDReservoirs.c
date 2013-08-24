@@ -352,7 +352,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         }
 
         //
-        if (SIMOUT > 0) {
+       /* if (SIMOUT > 0) {
             if (resRelease < release_min) { // Chekking MAx-Min Release  From Reservoir
                 release_min = resRelease;
 
@@ -360,7 +360,7 @@ static void _MDReservoirNeuralNet(int itemID) {
                     release_max = resRelease;
                 }
             }
-        }
+        }*/
         res_release_t_1 = resRelease; // (avmtdRelease - release_min) / (release_max - release_min);
 
         MFVarSetFloat(_MDOutResReleaseID, itemID, resRelease);
