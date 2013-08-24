@@ -275,6 +275,16 @@ static void _MDReservoirNeuralNet(int itemID) {
         I2[1][0] = res_release_t_2;
 
         I3 = m;
+        printf ("First Input: I1 \n");
+        printf ("%f \n",I1[0][0]);
+        printf ("%f \n",I1[1][0]);
+        printf ("%f \n",I1[2][0]);
+        printf ("Second Input: I2 \n");
+        printf ("%f \n",I2[0][0]);
+        printf ("%f \n",I2[1][0]);
+        printf ("Third Input: I3 \n");
+        printf ("%f \n",m);
+                
         ////////////////////////////////////////////////
         ////////////////////////////////////////////////
         ////REMOVED NEURAL ANNOUTPUT FUNCTION///////////
