@@ -236,7 +236,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0.9);
         if (discharge > 0 && discharge < discharge_min) { // Chekking MAx-Min Flow Into Reservoir
             discharge_min = discharge;
-        } else {
+        } //else {
             if (discharge > discharge_max) {
                 discharge_max = discharge;
             }
@@ -342,7 +342,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         MFVarSetFloat(_MDOutResRelease_t_3_ID,  itemID, res_release_t_2);
         MFVarSetFloat(_MDOutResStorageChgID,    itemID, resStorageChg);
         MFVarSetFloat(_MDOutResStorageID,       itemID, resStorage);
-    }
+   // }
+    
 
 }
 
@@ -444,7 +445,7 @@ int MDReservoirDef() {
                     ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutReservoirReleaseID  = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    (_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
+                    ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
                     ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_2_ID   = MFVarGetID(MDVarResRelease_t_2_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
