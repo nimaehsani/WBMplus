@@ -301,7 +301,7 @@ static void _MDReservoirNeuralNet(int itemID) {
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (3)! \n");
                     printf("%f %f %f %f %f %f %f %f %f %f\n", ANN, SIMOUT, release_max, release_min, prevResStorage, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
-                }//                                  -1146.385 0.000000       0.000000    0.000000    990485888.00   864.000000     99048592.00   0.010000
+                }//                                           0.0 -0.113640 0.000000     0.000000      0.000000      0.000000    990485888.0  86.400002      9904.858398     0.0010
                 resStorage = minresStorage;
             }
         }
@@ -340,7 +340,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         MFVarSetFloat(_MDOutDisch_t_3_ID,       itemID, discharge_t_2);
         MFVarSetFloat(_MDOutResRelease_t_2_ID,  itemID, res_release_t_1);
         MFVarSetFloat(_MDOutResRelease_t_3_ID,  itemID, res_release_t_2);
-        MFVarSetFloat(_MDOutResStorageChgID,    itemID, resStorageChg);
+        //MFVarSetFloat(_MDOutResStorageChgID,    itemID, resStorageChg);
         MFVarSetFloat(_MDOutResStorageID,       itemID, resStorage);
     }
 
@@ -444,7 +444,7 @@ int MDReservoirDef() {
                     ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutReservoirReleaseID  = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
+                    //((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
                     ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_2_ID   = MFVarGetID(MDVarResRelease_t_2_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
