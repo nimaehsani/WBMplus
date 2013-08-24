@@ -327,7 +327,7 @@ static void _MDReservoirNeuralNet(int itemID) {
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (3)! \n");
                     printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
-                }//                                  -0.588902  0.000000      0.000000    0.000000    203524.500000    nan          50881.125000  0.000000
+                }//                                  -1146.385 0.000000       0.000000    0.000000    990485888.00   864.000000     99048592.00   0.010000
                 resStorage = minresStorage;
             }
         }
@@ -365,8 +365,8 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         MFVarSetFloat(_MDOutResReleaseID, itemID, resRelease);
         MFVarSetFloat(_MDOutLastMonthID, itemID, m);
-        MFVarSetFloat(_MDOutReleaseMaxID, itemID, release_max);
-        MFVarSetFloat(_MDOutReleaseMinID, itemID, release_min);
+        //MFVarSetFloat(_MDOutReleaseMaxID, itemID, release_max);
+        //MFVarSetFloat(_MDOutReleaseMinID, itemID, release_min);
         MFVarSetFloat(_MDOutReservoirReleaseID, itemID, res_release_t_1);
 
         MFVarSetFloat(_MDOutDisch_t_2_ID, itemID, discharge_t_1);
