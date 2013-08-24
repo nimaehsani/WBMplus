@@ -216,6 +216,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     float res_release_t_2;
     float res_release_t_3;
     float SIMOUT;
+    float prevResStorage;
 
     discharge = MFVarGetFloat(_MDInDischargeID, itemID, 0.0);
     if (discharge < 0) {
@@ -275,31 +276,31 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         ANN = ANNOUTPUT(I1, I2, I3) * (release_max - release_min) + release_min;
 
-        resStorage = MFVarGetFloat(_MDOutResStorageID, itemID, resCapacity);
+        prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, resCapacity);
 
         resStorageChg = (discharge - ANN)*3600 * 24;
         minresStorage = resCapacity * 0.00001;
 
-        if (resStorage + resStorageChg < resCapacity && resStorage + resStorageChg > minresStorage) {
+        if (prevResStorage + resStorageChg < resCapacity && prevResStorage + resStorageChg > minresStorage) {
             SIMOUT = ANN;
             if (SIMOUT < 0) {
                 printf("Error: Negative release (1)! \n");
                 printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
             } 
-            resStorage = resStorage + resStorageChg;
+            resStorage = prevResStorage + resStorageChg;
         } else {
-            if (resStorage + resStorageChg > resCapacity) {
-                SIMOUT = ((discharge * 3600 * 24)-(resCapacity - resStorage)) / (3600 * 24);
+            if (prevResStorage + resStorageChg > resCapacity) {
+                SIMOUT = ((discharge * 3600 * 24)-(resCapacity - prevResStorage)) / (3600 * 24);
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (2)! \n");
                     printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
                 }
                 resStorage = resCapacity;
             } else {
-                SIMOUT = (resStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
+                SIMOUT = (prevResStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (3)! \n");
-                    printf("%f %f %f %f %f %f %f %f %f\n", ANN, SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
+                    printf("%f %f %f %f %f %f %f %f %f %f\n", ANN, SIMOUT, release_max, release_min, prevResStorage, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
                 }//                                  -1146.385 0.000000       0.000000    0.000000    990485888.00   864.000000     99048592.00   0.010000
                 resStorage = minresStorage;
             }
