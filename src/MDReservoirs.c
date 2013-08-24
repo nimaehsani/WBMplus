@@ -189,7 +189,6 @@ static float ANNOUTPUT(float I1[3][1], float I2[2][1], float I3) {
 
 static void _MDReservoirNeuralNet(int itemID) {
 
-    // Input
     float discharge; // Current discharge [m3/s]
     float meanDischarge; // Long-term mean annual discharge [m3/s]
     float resCapacity; // Reservoir capacity [m3]
@@ -201,9 +200,9 @@ static void _MDReservoirNeuralNet(int itemID) {
     float discharge_max;
     float release_min;
     float release_max;
-    int m = MFDateGetCurrentMonth();
-    int lastmonth;
-    int d = MFDateGetCurrentDay();
+    int   m             = MFDateGetCurrentMonth();
+    int   lastmonth;
+    int   d             = MFDateGetCurrentDay();
     float mtdInflow; // Total Monthly (Up to that Date) InFlow
     float avmtdInflow; // Average Monthly (Up to that Date) InFlow
     float mtdRelease; // Total Monthly (Up to that Date) Release
@@ -212,8 +211,6 @@ static void _MDReservoirNeuralNet(int itemID) {
     float I2[2][1]; /* Input to ANN (ANNOUTPUT.c) */
     float I3; /* Input to ANN (ANNOUTPUT.c) */
     float ANN;
-
-    // Output
     float resStorage; // Reservoir storage [km3]
     float resStorageChg; // Reservoir storage change [km3/dt]
     float resRelease; // Reservoir release [m3/s]
@@ -222,40 +219,22 @@ static void _MDReservoirNeuralNet(int itemID) {
     float res_release_t_3;
     float SIMOUT;
 
-    // local
-    /* float prevResStorage; // Reservoir storage from the previous time step [km3]
-    float dt;             // Time step length [s]
-    float balance;		  // water balance [m3/s]
-
-    // Parameters
-    float drySeasonPct = 0.60;	// RJS 071511
-    float wetSeasonPct = 0.16;	// RJS 071511  */
-    float year = 0; // RJS 082311 
-
     discharge = MFVarGetFloat(_MDInDischargeID, itemID, 0.0);
     if (discharge < 0) {
         printf("Negative discharge= %f \n", discharge);
     }
-    // meanDischarge = MFVarGetFloat (_MDInDischMeanID,    itemID, discharge);
-    year = MFDateGetCurrentYear();
 
     if ((resCapacity = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0)) <= 0.0) {
-        MFVarSetFloat(_MDOutResStorageID, itemID, 0.0);
+        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
         MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
-        MFVarSetFloat(_MDOutResReleaseID, itemID, discharge);
+        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
 
         //		if (itemID == 25014) printf("@@@ m= %d, d= %d, balance = %f, resCapacity = %f, Q = %f, meanQ = %f, resRelease = %f, resStorage = %f, prevResStorage = %f\n", MFDateGetCurrentMonth(), MFDateGetCurrentDay(), balance, resCapacity, discharge, meanDischarge, resRelease, resStorage*1000000000, prevResStorage*1000000000);
         return;
     } else {
-        resCapacity = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
-        discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID, 1);
-        discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 2);
-
-        // discharge_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, 0.0);
-        // discharge_max = MFVarGetFloat(_MDOutReleaseMaxID, itemID, 0.0);
-
-        // discharge_max = MFVarGetFloat(_MDOutDischMaxID, itemID, 0.0);
-        // discharge_min = MFVarGetFloat(_MDOutDischMinID, itemID, 0.0);
+        resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
+        discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 1.0);
+        discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0.9);
         if (discharge > 0 && discharge < discharge_min) { // Chekking MAx-Min Flow Into Reservoir
             discharge_min = discharge;
         } else {
@@ -265,30 +244,27 @@ static void _MDReservoirNeuralNet(int itemID) {
         }
         MFVarSetFloat(_MDOutDischMaxID, itemID, discharge_max);
         MFVarSetFloat(_MDOutDischMinID, itemID, discharge_min);
-
-        release_max = 2;//MFVarGetFloat(_MDOutReleaseMaxID, itemID, 2);
-        release_min = 1;//MFVarGetFloat(_MDOutReleaseMinID, itemID, 1);
-
-        lastmonth = MFVarGetFloat(_MDOutLastMonthID, itemID, 0.0);
-        mtdInflow = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0);
+ 
+        release_max = MFVarGetFloat(_MDOutReleaseMaxID,       itemID, 0.9);
+        release_min = MFVarGetFloat(_MDOutReleaseMinID,       itemID, 0.8);
+        lastmonth   = MFVarGetFloat(_MDOutLastMonthID,        itemID, 0.0);
+        mtdInflow   = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0);
         if (lastmonth == m) {
-            //mtdInflow = mtdInflow + MFVarGetFloat (_MDInDischMTDID,    itemID, discharge);
-            mtdInflow = mtdInflow + discharge;
+            mtdInflow   = mtdInflow + discharge;
             avmtdInflow = mtdInflow / d;
         } else {
+            mtdInflow =discharge;
             avmtdInflow = discharge;
-        }
-        //MFVarSetFloat (_MDOutMonthToDayInFlowID,    itemID, avmtdInflow);
+        } 
         MFVarSetFloat(_MDOutMonthToDayInFlowID, itemID, mtdInflow);
 
         // Discharge and Release Are Standardized [0, 1]  
 
-        discharge_t_1 = (avmtdInflow - discharge_min) / (discharge_max - discharge_min); // This Month
-        discharge_t_2 = MFVarGetFloat(_MDOutDisch_t_2_ID, itemID, 0.0); // Last Month
-        discharge_t_3 = MFVarGetFloat(_MDOutDisch_t_3_ID, itemID, 0.0); // Two Month Ago
-
-        res_release_t_2 = MFVarGetFloat(_MDOutResRelease_t_2_ID, itemID, 0.0); // Last Month
-        res_release_t_3 = MFVarGetFloat(_MDOutResRelease_t_3_ID, itemID, 0.0); // Two Month Ago
+        discharge_t_1   = (avmtdInflow - discharge_min) / (discharge_max - discharge_min); // This Month
+        discharge_t_2   = MFVarGetFloat(_MDOutDisch_t_2_ID,      itemID, 0.001); // Last Month
+        discharge_t_3   = MFVarGetFloat(_MDOutDisch_t_3_ID,      itemID, 0.001); // Two Month Ago
+        res_release_t_2 = MFVarGetFloat(_MDOutResRelease_t_2_ID, itemID, 0.001); // Last Month
+        res_release_t_3 = MFVarGetFloat(_MDOutResRelease_t_3_ID, itemID, 0.001); // Two Month Ago
 
         I1[0][0] = discharge_t_3;
         I1[1][0] = discharge_t_2;
@@ -301,7 +277,7 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         ANN = ANNOUTPUT(I1, I2, I3) * (release_max - release_min) + release_min;
 
-        resStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.5 * resCapacity);
+        resStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.5*resCapacity);
 
         resStorageChg = (discharge - ANN)*3600 * 24;
         minresStorage = resCapacity * 0.1;
@@ -311,7 +287,7 @@ static void _MDReservoirNeuralNet(int itemID) {
             if (SIMOUT < 0) {
                 printf("Error: Negative release (1)! \n");
                 printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
-            } //  -2.485446 697241.6875 1142204.125 249713.500000  285551.031250   0.404757
+            } 
             resStorage = resStorage + resStorageChg;
         } else {
             if (resStorage + resStorageChg > resCapacity) {
@@ -322,7 +298,6 @@ static void _MDReservoirNeuralNet(int itemID) {
                 }
                 resStorage = resCapacity;
             } else {
-                //  (resStorage + resStorageChg < minresStorage) {
                 SIMOUT = (resStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (3)! \n");
@@ -334,47 +309,39 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         mtdRelease = MFVarGetFloat(_MDOutMonthToDayReleaseID, itemID, 0.0);
         if (lastmonth == m) {
-            // mtdRelease = mtdRelease + MFVarGetFloat (_MDInDischMTDID,    itemID, SIMOUT);
-            mtdRelease = mtdRelease + SIMOUT;
+            mtdRelease   = mtdRelease + SIMOUT;
             avmtdRelease = mtdRelease / d;
         } else {
+            mtdRelease   = SIMOUT;
             avmtdRelease = SIMOUT;
         }
-        //MFVarSetFloat (_MDOutMonthToDayReleaseID,    itemID, avmtdRelease);
         MFVarSetFloat(_MDOutMonthToDayReleaseID, itemID, mtdRelease);
-
-        //     }
 
         if (SIMOUT > 0) {
             resRelease = SIMOUT;
         } else {
-            resRelease = 0.01;
+            resRelease = 0.001;
         }
-
-        //
-       /* if (SIMOUT > 0) {
+        
+        if (SIMOUT > 0) {
             if (resRelease < release_min) { // Chekking MAx-Min Release  From Reservoir
                 release_min = resRelease;
-
                 if (resRelease > release_max) {
                     release_max = resRelease;
                 }
             }
-        }*/
-        res_release_t_1 = resRelease; // (avmtdRelease - release_min) / (release_max - release_min);
+        }
+        res_release_t_1 = resRelease; 
 
-        MFVarSetFloat(_MDOutResReleaseID, itemID, resRelease);
-        MFVarSetFloat(_MDOutLastMonthID, itemID, m);
-        //MFVarSetFloat(_MDOutReleaseMaxID, itemID, release_max);
-        //MFVarSetFloat(_MDOutReleaseMinID, itemID, release_min);
+        MFVarSetFloat(_MDOutResReleaseID,       itemID, resRelease);
+        MFVarSetFloat(_MDOutLastMonthID,        itemID, m);
         MFVarSetFloat(_MDOutReservoirReleaseID, itemID, res_release_t_1);
-
-        MFVarSetFloat(_MDOutDisch_t_2_ID, itemID, discharge_t_1);
-        MFVarSetFloat(_MDOutDisch_t_3_ID, itemID, discharge_t_2);
-        MFVarSetFloat(_MDOutResRelease_t_2_ID, itemID, res_release_t_1);
-        MFVarSetFloat(_MDOutResRelease_t_3_ID, itemID, res_release_t_2);
-        MFVarSetFloat(_MDOutResStorageChgID, itemID, resStorageChg);
-        MFVarSetFloat(_MDOutResStorageID, itemID, resStorage);
+        MFVarSetFloat(_MDOutDisch_t_2_ID,       itemID, discharge_t_1);
+        MFVarSetFloat(_MDOutDisch_t_3_ID,       itemID, discharge_t_2);
+        MFVarSetFloat(_MDOutResRelease_t_2_ID,  itemID, res_release_t_1);
+        MFVarSetFloat(_MDOutResRelease_t_3_ID,  itemID, res_release_t_2);
+        MFVarSetFloat(_MDOutResStorageChgID,    itemID, resStorageChg);
+        MFVarSetFloat(_MDOutResStorageID,       itemID, resStorage);
     }
 
 }
