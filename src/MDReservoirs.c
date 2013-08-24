@@ -299,7 +299,7 @@ static void _MDReservoirNeuralNet(int itemID) {
                 SIMOUT = (resStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (3)! \n");
-                    printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
+                    printf("%f %f %f %f %f %f %f %f %f\n", ANN, SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
                 }//                                  -1146.385 0.000000       0.000000    0.000000    990485888.00   864.000000     99048592.00   0.010000
                 resStorage = minresStorage;
             }
@@ -443,7 +443,7 @@ int MDReservoirDef() {
                     ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutReservoirReleaseID  = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
+                    ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
                     ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_2_ID   = MFVarGetID(MDVarResRelease_t_2_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
