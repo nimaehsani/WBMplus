@@ -266,8 +266,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         MFVarSetFloat(_MDOutDischMaxID, itemID, discharge_max);
         MFVarSetFloat(_MDOutDischMinID, itemID, discharge_min);
 
-        release_max = MFVarGetFloat(_MDOutReleaseMaxID, itemID, 2);
-        release_min = MFVarGetFloat(_MDOutReleaseMinID, itemID, 1);
+        release_max = 2;//MFVarGetFloat(_MDOutReleaseMaxID, itemID, 2);
+        release_min = 1;//MFVarGetFloat(_MDOutReleaseMinID, itemID, 1);
 
         lastmonth = MFVarGetFloat(_MDOutLastMonthID, itemID, 0.0);
         mtdInflow = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0);
