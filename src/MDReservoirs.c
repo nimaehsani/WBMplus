@@ -20,29 +20,28 @@ Feb. 2009 DW
 #include <math.h>
 
 // Input
-static int _MDInDischargeID = MFUnset;
-static int _MDInDischMeanID = MFUnset;
-static int _MDInResCapacityID = MFUnset;
-//static int _MDInDischMTDID       = MFUnset;
+static int _MDInDischargeID          = MFUnset;
+static int _MDInDischMeanID          = MFUnset;
+static int _MDInResCapacityID        = MFUnset;
 
 // Output
-static int _MDOutResStorageID = MFUnset;
-static int _MDOutResStorageChgID = MFUnset;
-static int _MDOutResReleaseID = MFUnset;
-static int _MDOutResRelease_t_1_ID = MFUnset;
-static int _MDOutResRelease_t_2_ID = MFUnset;
-static int _MDOutResRelease_t_3_ID = MFUnset;
-static int _MDOutDisch_t_1_ID = MFUnset;
-static int _MDOutDisch_t_2_ID = MFUnset;
-static int _MDOutDisch_t_3_ID = MFUnset;
-static int _MDOutDischMinID = MFUnset; // -MDIn or MDOut? Value Updates in Each State and should be Used in Next Step
-static int _MDOutDischMaxID = MFUnset; // ...
-static int _MDOutReleaseMinID = MFUnset; // ...
-static int _MDOutReleaseMaxID = MFUnset; // ...
-static int _MDOutLastMonthID = MFUnset;
-static int _MDOutMonthToDayInFlowID = MFUnset;
+static int _MDOutResStorageID        = MFUnset;
+static int _MDOutResStorageChgID     = MFUnset;
+static int _MDOutResReleaseID        = MFUnset;
+static int _MDOutResRelease_t_1_ID   = MFUnset;
+static int _MDOutResRelease_t_2_ID   = MFUnset;
+static int _MDOutResRelease_t_3_ID   = MFUnset;
+static int _MDOutDisch_t_1_ID        = MFUnset;
+static int _MDOutDisch_t_2_ID        = MFUnset;
+static int _MDOutDisch_t_3_ID        = MFUnset;
+static int _MDOutDischMinID          = MFUnset; // -MDIn or MDOut? Value Updates in Each State and should be Used in Next Step
+static int _MDOutDischMaxID          = MFUnset; // ...
+static int _MDOutReleaseMinID        = MFUnset; // ...
+static int _MDOutReleaseMaxID        = MFUnset; // ...
+static int _MDOutLastMonthID         = MFUnset;
+static int _MDOutMonthToDayInFlowID  = MFUnset;
 static int _MDOutMonthToDayReleaseID = MFUnset;
-static int _MDOutReservoirReleaseID = MFUnset;
+static int _MDOutReservoirReleaseID  = MFUnset;
 
 static float ANNOUTPUT(float I1[3][1], float I2[2][1], float I3) {
 
@@ -188,10 +187,12 @@ static float ANNOUTPUT(float I1[3][1], float I2[2][1], float I3) {
 }
 
 static void _MDReservoirNeuralNet(int itemID) {
-
-    float discharge; // Current discharge [m3/s]
-    float meanDischarge; // Long-term mean annual discharge [m3/s]
-    float resCapacity; // Reservoir capacity [m3]
+    
+    int   m             = MFDateGetCurrentMonth();
+    int   d             = MFDateGetCurrentDay();
+    int   lastmonth;
+    float discharge;      // Current discharge [m3/s]
+    float resCapacity;    // Reservoir capacity [m3]
     float minresStorage;
     float discharge_t_1;
     float discharge_t_2;
@@ -200,20 +201,17 @@ static void _MDReservoirNeuralNet(int itemID) {
     float discharge_max;
     float release_min;
     float release_max;
-    int   m             = MFDateGetCurrentMonth();
-    int   lastmonth;
-    int   d             = MFDateGetCurrentDay();
-    float mtdInflow; // Total Monthly (Up to that Date) InFlow
-    float avmtdInflow; // Average Monthly (Up to that Date) InFlow
-    float mtdRelease; // Total Monthly (Up to that Date) Release
-    float avmtdRelease; // Average Monthly (Up to that Date) Release
-    float I1[3][1]; /* Input to ANN (ANNOUTPUT.c) */
-    float I2[2][1]; /* Input to ANN (ANNOUTPUT.c) */
-    float I3; /* Input to ANN (ANNOUTPUT.c) */
+    float mtdInflow;       // Total Monthly (Up to that Date) InFlow
+    float avmtdInflow;     // Average Monthly (Up to that Date) InFlow
+    float mtdRelease;      // Total Monthly (Up to that Date) Release
+    float avmtdRelease;    // Average Monthly (Up to that Date) Release
+    float I1[3][1];        // Input to ANN (ANNOUTPUT.c) 
+    float I2[2][1];        // Input to ANN (ANNOUTPUT.c) 
+    float I3;              // Input to ANN (ANNOUTPUT.c) 
     float ANN;
-    float resStorage; // Reservoir storage [km3]
-    float resStorageChg; // Reservoir storage change [km3/dt]
-    float resRelease; // Reservoir release [m3/s]
+    float resStorage;      // Reservoir storage [km3]
+    float resStorageChg;   // Reservoir storage change [km3/dt]
+    float resRelease;      // Reservoir release [m3/s]
     float res_release_t_1; // STANDARD Reservoir release (resRelease) [m3/s]
     float res_release_t_2;
     float res_release_t_3;
@@ -224,10 +222,10 @@ static void _MDReservoirNeuralNet(int itemID) {
         printf("Negative discharge= %f \n", discharge);
     }
 
-    if ((resCapacity = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0)) <= 0.0) {
-        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
-        MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
-        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
+    if ((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) {
+                       MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
+                       MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
+                       MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
 
         //		if (itemID == 25014) printf("@@@ m= %d, d= %d, balance = %f, resCapacity = %f, Q = %f, meanQ = %f, resRelease = %f, resStorage = %f, prevResStorage = %f\n", MFDateGetCurrentMonth(), MFDateGetCurrentDay(), balance, resCapacity, discharge, meanDischarge, resRelease, resStorage*1000000000, prevResStorage*1000000000);
         return;
@@ -332,7 +330,8 @@ static void _MDReservoirNeuralNet(int itemID) {
             }
         }
         res_release_t_1 = resRelease; 
-
+        MFVarSetFloat(_MDOutReleaseMaxID,       itemID, release_max);
+        MFVarSetFloat(_MDOutReleaseMinID,       itemID, release_min);
         MFVarSetFloat(_MDOutResReleaseID,       itemID, resRelease);
         MFVarSetFloat(_MDOutLastMonthID,        itemID, m);
         MFVarSetFloat(_MDOutReservoirReleaseID, itemID, res_release_t_1);
@@ -421,21 +420,17 @@ int MDReservoirDef() {
     MFDefEntering("Reservoirs");
     switch (optID) {
         case MDcalculate:
-            if (((_MDInDischMeanID = MDDischMeanDef()) == CMfailed) ||
-                    ((_MDInDischargeID = MDDischLevel2Def()) == CMfailed) ||
-                    ((_MDInResCapacityID = MFVarGetID(MDVarReservoirCapacity,            "km3",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutResStorageID = MFVarGetID(MDVarReservoirStorage,             "km3",  MFOutput, MFState, MFInitial))  == CMfailed) ||
-                    ((_MDOutResStorageChgID = MFVarGetID(MDVarReservoirStorageChange,    "km3",  MFOutput, MFState, MFBoundary)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
-                    ((_MDOutResReleaseID = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
+            if (    ((_MDInDischMeanID      = MDDischMeanDef())   == CMfailed) ||
+                    ((_MDInDischargeID      = MDDischLevel2Def()) == CMfailed) ||
+                    ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "km3",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
+                    ((_MDOutResStorageID    = MFVarGetID(MDVarReservoirStorage,             "km3",  MFOutput, MFState, MFInitial))  == CMfailed) ||
+                    ((_MDOutResStorageChgID = MFVarGetID(MDVarReservoirStorageChange,       "km3",  MFOutput, MFState, MFBoundary)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
+                    ((_MDOutResReleaseID    = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
                     (MFModelAddFunction(_MDReservoirDW) == CMfailed)) return (CMfailed);
             break;
         case MDneuralnet:
-            if (//((_MDInDischMeanID      = MDDischMeanDef ())   == CMfailed) ||
-                    ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
-                    ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput, MFState, MFBoundary)) == CMfailed) ||
-                    //((_MDInDischMTDID    = MFVarGetID (MDVarDischMTD ,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
-                    //((_MDInDischMinID    = MFVarGetID (MDVarDischargeMin,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
-                    //((_MDInDischMaxID    = MFVarGetID (MDVarDischargeMax,      "m3/s",  MFInput,  MFState, MFBoundary)) == CMfailed) ||
+            if (    ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
+                    ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed)
                     ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_3_ID        = MFVarGetID(MDVarDisch_t_3_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
@@ -449,7 +444,7 @@ int MDReservoirDef() {
                     ((_MDOutReservoirReleaseID  = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
-                    ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
+                    ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_2_ID   = MFVarGetID(MDVarResRelease_t_2_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutResRelease_t_3_ID   = MFVarGetID(MDVarResRelease_t_3_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
