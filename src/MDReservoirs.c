@@ -436,8 +436,8 @@ int MDReservoirDef() {
                     ((_MDOutDisch_t_3_ID        = MFVarGetID(MDVarDisch_t_3_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDischMinID          = MFVarGetID(MDVarDischMin,               "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDischMaxID          = MFVarGetID(MDVarDischMax,               "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutReleaseMinID        = MFVarGetID(MDVarReleaseMin,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutReleaseMaxID        = MFVarGetID(MDVarReleaseMax,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
+                    ((_MDOutReleaseMinID        = MFVarGetID(MDVarReleaseMin,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutReleaseMaxID        = MFVarGetID(MDVarReleaseMax,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutLastMonthID         = MFVarGetID(MDVarLastMonth,              "m"   , MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutMonthToDayInFlowID  = MFVarGetID(MDVarMonthToDayInFlow,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
