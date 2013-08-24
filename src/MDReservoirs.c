@@ -312,7 +312,7 @@ static void _MDReservoirNeuralNet(int itemID) {
                 printf("Error: Negative release (1)! \n");
                 printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
             } //  -2.485446 697241.6875 1142204.125 249713.500000  285551.031250   0.404757
-            resStorage = 9.999; //resStorage + resStorageChg;
+            resStorage = resStorage + resStorageChg;
         } else {
             if (resStorage + resStorageChg > resCapacity) {
                 SIMOUT = ((discharge * 3600 * 24)-(resCapacity - resStorage)) / (3600 * 24);
@@ -320,7 +320,7 @@ static void _MDReservoirNeuralNet(int itemID) {
                     printf("Error: Negative release (2)! \n");
                     printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
                 }
-                resStorage = 9.999; // resCapacity;
+                resStorage = resCapacity;
             } else {
                 //  (resStorage + resStorageChg < minresStorage) {
                 SIMOUT = (resStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
@@ -328,7 +328,7 @@ static void _MDReservoirNeuralNet(int itemID) {
                     printf("Error: Negative release (3)! \n");
                     printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resStorage, resCapacity, resStorageChg, minresStorage, discharge);
                 }//                                  -0.588902  0.000000      0.000000    0.000000    203524.500000    nan          50881.125000  0.000000
-                resStorage = 9.999; // minresStorage;
+                resStorage = minresStorage;
             }
         }
 
@@ -355,7 +355,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         if (SIMOUT > 0) {
             if (resRelease < release_min) { // Chekking MAx-Min Release  From Reservoir
                 release_min = resRelease;
-            } else {
+
                 if (resRelease > release_max) {
                     release_max = resRelease;
                 }
