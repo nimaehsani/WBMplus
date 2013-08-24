@@ -208,6 +208,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     float I1[3][1];        // Input to ANN (ANNOUTPUT.c) 
     float I2[2][1];        // Input to ANN (ANNOUTPUT.c) 
     float I3;              // Input to ANN (ANNOUTPUT.c) 
+    float ann;
     float ANN;
     float resStorage;      // Reservoir storage [km3]
     float resStorageChg;   // Reservoir storage change [km3/dt]
@@ -261,9 +262,9 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         discharge_t_1   = (avmtdInflow - discharge_min) / (discharge_max - discharge_min); // This Month
         discharge_t_2   = MFVarGetFloat(_MDOutDisch_t_2_ID,      itemID, 0.001); // Last Month
-        discharge_t_3   = MFVarGetFloat(_MDOutDisch_t_3_ID,      itemID, 0.001); // Two Month Ago
+        discharge_t_3   = MFVarGetFloat(_MDOutDisch_t_3_ID,      itemID, 0.002); // Two Month Ago
         res_release_t_2 = MFVarGetFloat(_MDOutResRelease_t_2_ID, itemID, 0.001); // Last Month
-        res_release_t_3 = MFVarGetFloat(_MDOutResRelease_t_3_ID, itemID, 0.001); // Two Month Ago
+        res_release_t_3 = MFVarGetFloat(_MDOutResRelease_t_3_ID, itemID, 0.002); // Two Month Ago
 
         I1[0][0] = discharge_t_3;
         I1[1][0] = discharge_t_2;
@@ -273,10 +274,13 @@ static void _MDReservoirNeuralNet(int itemID) {
         I2[1][0] = res_release_t_2;
 
         I3 = m;
+        
+        ann= ANNOUTPUT(I1, I2, I3);
 
-        ANN = ANNOUTPUT(I1, I2, I3) * (release_max - release_min) + release_min;
+        ANN = ann * (release_max - release_min) + release_min;
         if (ANN != ANN){
             ANN=0.00001;
+            printf("nan: %f \n", ann);
         }
 
         prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, resCapacity);
