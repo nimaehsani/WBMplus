@@ -307,7 +307,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         printf ("%f \n",I2[0][0]);
         printf ("%f \n",I2[1][0]);
         printf ("Third Input: I3 \n");
-        printf ("%f \n",m);
+        printf ("%f \n",I3);
                 
         ////////////////////////////////////////////////
         ////////////////////////////////////////////////
@@ -469,6 +469,8 @@ static void _MDReservoirNeuralNet(int itemID) {
             ANN=0.00001;
             printf("nan: %f \n", ANNOUTPUT);
         }
+        printf("ANN: %f \n", ANNOUTPUT);
+        printf("EXP: %f \n", exp (2));
 
         prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, resCapacity);
 
