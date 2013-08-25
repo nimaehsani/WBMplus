@@ -253,7 +253,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         release_min = MFVarGetFloat(_MDOutReleaseMinID,       itemID, 0.8);
         lastmonth   = MFVarGetFloat(_MDOutLastMonthID,        itemID, 1.0);
         mtdInflow   = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0002);
-        printf("%f %f %f %f %i %f \n", discharge_max, discharge_min, release_max, release_min, lastmonth, mtdInflow);
+       // printf("%f %f %f %f %i %f \n", discharge_max, discharge_min, release_max, release_min, lastmonth, mtdInflow);
         //                             0.603248        0.000000        0.000000     0.000000    4.309789   134217729.000000
         if(m==0){
             m=1;
@@ -304,7 +304,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         if (m==0){
             I3=2;
         }
-        printf ("First Input: I1 \n");
+       /* printf ("First Input: I1 \n");
         printf ("%f \n",I1[0][0]);
         printf ("%f \n",I1[1][0]);
         printf ("%f \n",I1[2][0]);
@@ -312,7 +312,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         printf ("%f \n",I2[0][0]);
         printf ("%f \n",I2[1][0]);
         printf ("Third Input: I3 \n");
-        printf ("%f \n",I3);
+        printf ("%f \n",I3); */
                 
         ////////////////////////////////////////////////
         ////////////////////////////////////////////////
@@ -474,8 +474,8 @@ static void _MDReservoirNeuralNet(int itemID) {
             ANN=0.00001;
             printf("nan: %f \n", ANNOUTPUT);
         }
-        printf("ANN: %f \n", ANNOUTPUT);
-        printf("EXP: %f \n", exp (2));
+       // printf("ANN: %f \n", ANNOUTPUT);
+       // printf("EXP: %f \n", exp (2));
 
         prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.0);
         if (prevResStorage==0){
@@ -527,7 +527,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         }
         
         if (SIMOUT > 0) {
-            if (resRelease < release_min) { // Chekking MAx-Min Release  From Reservoir
+            if (resRelease < release_min && resRelease > 0) { // Chekking MAx-Min Release  From Reservoir
                 release_min = resRelease;
                 if (resRelease > release_max) {
                     release_max = resRelease;
