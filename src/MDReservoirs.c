@@ -253,7 +253,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         release_min = MFVarGetFloat(_MDOutReleaseMinID,       itemID, 0.8);
         lastmonth   = MFVarGetFloat(_MDOutLastMonthID,        itemID, 1.0);
         mtdInflow   = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0002);
-        printf("%f %f %f %f %f %f \n", discharge_max, discharge_min, release_max, release_min, lastmonth, mtdInflow);
+        printf("%f %f %f %f %i %f \n", discharge_max, discharge_min, release_max, release_min, lastmonth, mtdInflow);
+        //                             0.603248        0.000000        0.000000     0.000000    4.309789   134217729.000000
         if(m==0){
             m=1;
         }
@@ -488,7 +489,7 @@ static void _MDReservoirNeuralNet(int itemID) {
             SIMOUT = ANN;
             if (SIMOUT < 0) {
                 printf("Error: Negative release (1)! \n");
-                printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resCapacity, resStorageChg, minresStorage, discharge);
+                printf("%f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resCapacity, resStorageChg, minresStorage, discharge);
             } 
             resStorage = prevResStorage + resStorageChg;
         } else {
@@ -496,14 +497,14 @@ static void _MDReservoirNeuralNet(int itemID) {
                 SIMOUT = ((discharge * 3600 * 24)-(resCapacity - prevResStorage)) / (3600 * 24);
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (2)! \n");
-                    printf("%f %f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resCapacity, resStorageChg, minresStorage, discharge);
+                    printf("%f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resCapacity, resStorageChg, minresStorage, discharge);
                 }
                 resStorage = resCapacity;
             } else {
                 SIMOUT = (prevResStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (3)! \n");
-                    printf("%f %f %f %f %f %f %f %f %f %f\n", ANN, SIMOUT, release_max, release_min, prevResStorage, resCapacity, resStorageChg, minresStorage, discharge);
+                    printf("%f %f %f %f %f %f %f %f %f\n", ANN, SIMOUT, release_max, release_min, prevResStorage, resCapacity, resStorageChg, minresStorage, discharge);
                 }//                                         0.00  -0.000031  0.000000    0.000000       0.000000      270132.5     0.000000       2.701325      0.000000
                 resStorage = minresStorage;
             }
