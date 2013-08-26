@@ -483,7 +483,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         }*/
 
         resStorageChg = (discharge - ANN)*3600 * 24;
-        minresStorage = resCapacity * 0.0000000001;
+        minresStorage = resCapacity * 0.25;
 
         if (prevResStorage + resStorageChg < resCapacity && prevResStorage + resStorageChg > minresStorage) {
             SIMOUT = ANN;
