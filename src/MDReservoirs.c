@@ -525,6 +525,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         //} else {
          //   resRelease = 0.001;
         //}
+            printf("Difference= %f \n", (discharge-resRelease));
         
         //if (SIMOUT > 0) {
             if (resRelease < release_min /*&& resRelease > 0*/) { // Chekking MAx-Min Release  From Reservoir
