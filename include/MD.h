@@ -238,7 +238,7 @@ extern "C" {
 #define MDVarLastMonth                          "LastMonth"
 #define MDVarMonthToDayInFlow                   "TotalReservoirInflowUpToDate"
 #define MDVarMonthToDayRelease                  "TotalReservoirReleaseUpToDate"
-#define MDVarReservoirRelease                   "ReservoirRelease"
+//#define MDVarReservoirRelease                   "ReservoirRelease"
 
 #define MDVarRelHumidity                     "RelativeHumidity"
 #define MDVarRelSoilMoisture                 "RelativeSoilMoisture"	
