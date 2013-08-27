@@ -246,6 +246,8 @@ static void _MDReservoirNeuralNet(int itemID) {
                 discharge_max = discharge;
             }
         }
+        discharge_max=300000;
+        discharge_min=0;
         MFVarSetFloat(_MDOutDischMaxID, itemID, discharge_max);
         MFVarSetFloat(_MDOutDischMinID, itemID, discharge_min);
  
