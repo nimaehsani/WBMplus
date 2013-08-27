@@ -224,7 +224,7 @@ extern "C" {
 //#define MDVarDischMTD                        "TotalMonthlyDischargeUpTothatDate"
 #define MDVarResStorage                         "ReservoirStorage"
 #define MDVarResStorageChg                      "ReservoirStorageCahnge"
-#define MDVarResRelease                         "ReleasefromReservoir"
+//#define MDVarResRelease                         "ReleasefromReservoir"
 #define MDVarResRelease_t_1_                    "ReleasefromReservoirMonthT"
 #define MDVarResRelease_t_2_                    "ReleasefromReservoirMonthT-1"
 #define MDVarResRelease_t_3_                    "ReleasefromReservoirMonthT-2"
@@ -238,7 +238,8 @@ extern "C" {
 #define MDVarLastMonth                          "LastMonth"
 #define MDVarMonthToDayInFlow                   "TotalReservoirInflowUpToDate"
 #define MDVarMonthToDayRelease                  "TotalReservoirReleaseUpToDate"
-//#define MDVarReservoirRelease                   "ReservoirRelease"
+#define MDVarReservoirRelease                   "ReservoirRelease"
+
 
 #define MDVarRelHumidity                     "RelativeHumidity"
 #define MDVarRelSoilMoisture                 "RelativeSoilMoisture"	

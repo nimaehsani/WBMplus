@@ -313,7 +313,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         printf ("Third Input: I3 \n");
         printf ("%f \n",I3); */
       
-        ANN = ANNOUTPUT * (release_max - release_min) + release_min;
+        ANN = ANNOUTPUT (I1, I2, I3)* (release_max - release_min) + release_min;
 
        // printf("ANN: %f \n", ANNOUTPUT);
        // printf("EXP: %f \n", exp (2));
