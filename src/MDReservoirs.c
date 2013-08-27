@@ -221,6 +221,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     float prevResStorage;
 
     discharge = MFVarGetFloat(_MDInDischargeID, itemID, 0.0);
+    printf("discharge= %f \n" , discharge);
    /* if (discharge < 0) {
         printf("Negative discharge= %f \n", discharge);
     }
