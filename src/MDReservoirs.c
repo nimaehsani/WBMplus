@@ -225,15 +225,16 @@ static void _MDReservoirNeuralNet(int itemID) {
     float SR_t_2;
 
     discharge = MFVarGetFloat(_MDInDischargeID, itemID, 0.0);
-   // printf("discharge= %f \n" , discharge);
+   
     if ((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) {
                        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
                        MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
                        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
+                       printf("discharge NO Res= %f \n" , discharge);
 
         //		if (itemID == 25014) printf("@@@ m= %d, d= %d, balance = %f, resCapacity = %f, Q = %f, meanQ = %f, resRelease = %f, resStorage = %f, prevResStorage = %f\n", MFDateGetCurrentMonth(), MFDateGetCurrentDay(), balance, resCapacity, discharge, meanDischarge, resRelease, resStorage*1000000000, prevResStorage*1000000000);
         return;
-    } //else {
+    } else {
         resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
         discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 1.0);
         discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0.9);
@@ -252,7 +253,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         lastmonth   = MFVarGetFloat(_MDOutLastMonthID,        itemID, 1.0);
         mtdInflow   = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 2.0);
         
-        printf("discharge= %f \n" , discharge);
+        printf("discharge WT Res= %f \n" , discharge);
         printf("discharge_max= %f \n" , discharge_max);
         printf("discharge_min= %f \n" , discharge_min);
         printf("release_max= %f \n" , release_max);
@@ -387,7 +388,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         
         MFVarSetFloat(_MDOutResStorageChgID,    itemID, resStorageChg);
         MFVarSetFloat(_MDOutResStorageID,       itemID, resStorage);
-   // }
+
+    }
     
 
 }
