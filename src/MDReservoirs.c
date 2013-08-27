@@ -468,7 +468,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         ////////////////
         ////////////////
         
-
+        release_max=discharge_max;
+        release_min=discharge_min;        
         ANN = ANNOUTPUT * (release_max - release_min) + release_min;
         /*if (ANN != ANN){
             ANN=0.00001;
