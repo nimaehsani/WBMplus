@@ -234,8 +234,8 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         //		if (itemID == 25014) printf("@@@ m= %d, d= %d, balance = %f, resCapacity = %f, Q = %f, meanQ = %f, resRelease = %f, resStorage = %f, prevResStorage = %f\n", MFDateGetCurrentMonth(), MFDateGetCurrentDay(), balance, resCapacity, discharge, meanDischarge, resRelease, resStorage*1000000000, prevResStorage*1000000000);
         return;
-    } else {
-        resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
+    } //else {
+        //resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
         discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 1.0);
         discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0.9);
         if (/*discharge > 0 &&*/ discharge < discharge_min) { // Chekking MAx-Min Flow Into Reservoir
@@ -389,7 +389,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         MFVarSetFloat(_MDOutResStorageChgID,    itemID, resStorageChg);
         MFVarSetFloat(_MDOutResStorageID,       itemID, resStorage);
 
-    }
+    //}
     
 
 }
@@ -425,8 +425,10 @@ static void _MDReservoirDW(int itemID) {
         MFVarSetFloat(_MDOutResStorageID, itemID, 0.0);
         MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
         MFVarSetFloat(_MDOutResReleaseID, itemID, discharge);
+        printf("discharge NO Res= %f \n" , discharge);
         return;
     }
+    printf("discharge WT Res= %f \n" , discharge);
     dt = MFModelGet_dt();
     prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.0);
 
