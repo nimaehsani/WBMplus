@@ -477,7 +477,7 @@ static void _MDReservoirNeuralNet(int itemID) {
        // printf("ANN: %f \n", ANNOUTPUT);
        // printf("EXP: %f \n", exp (2));
 
-        prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, resCapacity);
+        prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.5*resCapacity);
         /*if (prevResStorage==0){
             prevResStorage=resCapacity;
         }*/
