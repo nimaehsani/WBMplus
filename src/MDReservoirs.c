@@ -328,7 +328,10 @@ static void _MDReservoirNeuralNet(int itemID) {
        // printf("ANN: %f \n", ANNOUTPUT);
        // printf("EXP: %f \n", exp (2));
 
-        prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0.5*resCapacity);
+        prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0);
+        if (prevResStorage == 0){
+            prevResStorage= 0.5*resCapacity;
+        }
 
         resStorageChg = (discharge - ANN)*3600 * 24;
         minresStorage = resCapacity * 0.25;
