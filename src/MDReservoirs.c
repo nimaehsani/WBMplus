@@ -248,7 +248,6 @@ static void _MDReservoirNeuralNet(int itemID) {
         if (discharge_max == 0) {
                 discharge_max = 0.001;
             }
-        
  
         release_max = MFVarGetFloat(_MDOutReleaseMaxID,       itemID, 0);
         release_min = 0; // MFVarGetFloat(_MDOutReleaseMinID,       itemID, 0.8);
