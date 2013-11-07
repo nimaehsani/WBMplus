@@ -6,10 +6,12 @@ Copyright 1994-2011, UNH - CCNY/CUNY
 
 MDReservoirs.c
 
+nehsani00@ccny.cuny.edu
 dominik.wisser@unh.edu
 
-Updated with a residence time dependent function
-Feb. 2009 DW
+Updated with a Neural Network function for 
+Reservoir Operation.
+2013 NE
 
  *******************************************************************************/
 
@@ -237,7 +239,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         //		if (itemID == 25014) printf("@@@ m= %d, d= %d, balance = %f, resCapacity = %f, Q = %f, meanQ = %f, resRelease = %f, resStorage = %f, prevResStorage = %f\n", MFDateGetCurrentMonth(), MFDateGetCurrentDay(), balance, resCapacity, discharge, meanDischarge, resRelease, resStorage*1000000000, prevResStorage*1000000000);
         return;
     } //else {
-        //resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
+        resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
         discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 0.0);
         discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0.0);
         //if (/*discharge > 0 &&*/ discharge < discharge_min) { // Chekking MAx-Min Flow Into Reservoir
