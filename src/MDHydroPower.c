@@ -73,11 +73,12 @@ int MDHydroPowerGenDef() {
     switch (optID) {
         case MDcalculate:
             if (    ((MFModelAddFunction(_MDHydroPowerGen) == CMfailed)) || 
-                    ((_MDInMAxHydroCapID    = MFVarGetID(MDVarMAxHydroCap,                  "MW",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
+                    ((_MDInMAxHydroCapID    = MFVarGetID(MDVarMAxHydroCap,                  "MW",   MFInput,  MFFlux, MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFOutput, MFState, MFInitial))  == CMfailed) ||
-                    ((_MDInResReleaseID     = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) 
+                    ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFInput, MFState, MFInitial))  == CMfailed) ||
+                    ((_MDInResReleaseID     = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFInput, MFFlux,  MFBoundary)) == CMfailed) ||
+                    ((_MDOutHydroPowerGenerationID     = MFVarGetID(MDVarHydroPowerGeneration,             "MW", MFOutput, MFFlux,  MFBoundary)) == CMfailed) 
                     ) return (CMfailed);
             break;
         default: MFOptionMessage(optName, optStr, options);
