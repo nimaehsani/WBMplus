@@ -243,7 +243,7 @@ extern "C" {
 
 // NIMA HYDRO POWER
 
-#define MDHydroPower                            "HydroPower"
+#define MDVarHydroPower                            "HydroPowerGen"
 #define MDVarResMaxHeight                       "MaxReservoirHEight"
 #define MDVarMAxHydroCap                       "MaxHydroGenerationCapacity"  
 #define MDVarHydroPowerGeneration              "HydroPowerGeneration" 

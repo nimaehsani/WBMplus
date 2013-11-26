@@ -27,7 +27,7 @@ static int _MDInResReleaseID   = MFUnset;
 
 static int _MDOutHydroPowerGenerationID = MFUnset;
 
-static void _MDHydroPower(int itemID) {
+static void _MDHydroPowerGen(int itemID) {
 
 
     float resstorage; // Reservoir storage [m3]
@@ -60,7 +60,7 @@ static void _MDHydroPower(int itemID) {
 enum { MDnone, MDinput, MDcalculate };
 
 
-int MDHydroPowerDef() {
+int MDHydroPowerGenDef() {
     int optID = MFUnset;
     const char *optStr, *optName = MDVarHydroPower;
     const char *options [] = {MDNoneStr, MDCalculateStr, (char *) NULL};
@@ -69,10 +69,10 @@ int MDHydroPowerDef() {
 
     if ((optID == MDnone) || (_MDOutHydroPowerGenerationID != MFUnset)) return (_MDOutHydroPowerGenerationID);
 
-    MFDefEntering("HydroPower");
+    MFDefEntering("HydroPowerGen");
     switch (optID) {
         case MDcalculate:
-            if (    ((MFModelAddFunction(_MDHydroPower) == CMfailed)) || 
+            if (    ((MFModelAddFunction(_MDHydroPowerGen) == CMfailed)) || 
                     ((_MDInMAxHydroCapID    = MFVarGetID(MDVarMAxHydroCap,                  "MW",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
@@ -83,7 +83,7 @@ int MDHydroPowerDef() {
         default: MFOptionMessage(optName, optStr, options);
             return (CMfailed);
     }
-    MFDefLeaving("HydroPower");
+    MFDefLeaving("HydroPowerGen");
     return (_MDOutHydroPowerGenerationID);
 }
 
