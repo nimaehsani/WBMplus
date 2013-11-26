@@ -62,7 +62,7 @@ enum { MDnone, MDinput, MDcalculate };
 
 int MDHydroPowerGenDef() {
     int optID = MFUnset;
-    const char *optStr, *optName = MDVarHydroPower;
+    const char *optStr, *optName = MDOptHydroPower;
     const char *options [] = {MDNoneStr, MDCalculateStr, (char *) NULL};
 
     if ((optStr = MFOptionGet(optName)) != (char *) NULL) optID = CMoptLookup(options, optStr, true);
@@ -78,7 +78,7 @@ int MDHydroPowerGenDef() {
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFInput, MFState, MFInitial))  == CMfailed) ||
                     ((_MDInResReleaseID     = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFInput, MFFlux,  MFBoundary)) == CMfailed) ||
-                    ((_MDOutHydroPowerGenerationID     = MFVarGetID(MDVarHydroPowerGeneration,             "MW", MFOutput, MFFlux,  MFBoundary)) == CMfailed) 
+                    ((_MDOutHydroPowerGenerationID     = MFVarGetID(MDVarHydroPowerGeneration,             "MW", MFOutput, MFFlux,  MFInitial)) == CMfailed) 
                     ) return (CMfailed);
             break;
         default: MFOptionMessage(optName, optStr, options);
