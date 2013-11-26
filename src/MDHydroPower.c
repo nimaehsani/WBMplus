@@ -24,9 +24,9 @@ static int _MDInMAxHydroCapID  = MFUnset;
 static int _MDInResReleaseID   = MFUnset;
 
 // Output
-static int _MDOutHydroPowerID = MFUnset;
+static int _MDOutMegaWattID = MFUnset;
 
-static void _MDHydroPower(int itemID) {
+static void _MDHydroPower (int itemID) {
     float resstorage; // Reservoir storage [m3]
     float resrelease; // Reservoir release [m3/s]
     float resCapacity; // Reservoir capacity [m3]
@@ -48,36 +48,37 @@ static void _MDHydroPower(int itemID) {
         if (hydrogen > maxhydropcap) {
             hydrogen = maxhydropcap;
         }
-        MFVarSetFloat(_MDOutHydroPowerID, itemID, hydrogen);
+        MFVarSetFloat(_MDOutMegaWattID, itemID, hydrogen);
     }
 }
 
-enum { MDnone, MDcalculate };
+//enum { MDnone, MDinput, MDcalculate };
 
 int MDHydroPowerDef() {
-    int optID = MFUnset;
-    const char *optStr, *optName = MDOptHydroPower;
-    const char *options [] = {MDNoneStr, MDCalculateStr, (char *) NULL};
+	//int  optID = MFUnset;
+	//const char *optStr, *optName = MDVarHydroPower;
+	//const char *options [] = { MDNoneStr, MDInputStr, MDCalculateStr, (char *) NULL };
 
-    if ((optStr = MFOptionGet(optName)) != (char *) NULL) optID = CMoptLookup(options, optStr, true);
-    if ((optID == MDnone) || (_MDOutHydroPowerID != MFUnset)) return (_MDOutHydroPowerID);
+	//if ((optStr = MFOptionGet (optName)) != (char *) NULL) optID = CMoptLookup (options, optStr, true);
+		
+	//if ((optID == MDnone) || (_MDOutHydroPowerID != MFUnset)) return (_MDOutHydroPowerID);
 
     MFDefEntering("HydroPower");
-    switch (optID) {
-        case MDcalculate:
-            if (    ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed)
+    //switch (optID) {
+      //  case MDcalculate:
+            if (    ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInMAxHydroCapID    = MFVarGetID(MDVarMAxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFInput,  MFState,  MFInitial))  == CMfailed) ||
-                    ((_MDOutHydroPowerID    = MFVarGetID(MDVarHydroPower,                   "MW",   MFOutput, MFState,  MFInitial))  == CMfailed) ||
+                    ((_MDOutMegaWattID      = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFInitial))  == CMfailed) ||
                     ((MFModelAddFunction(_MDHydroPower) == CMfailed))
                     ) return (CMfailed);
-            break;
-        default: MFOptionMessage(optName, optStr, options);
-            return (CMfailed);
-    }
+           // break;
+        //default: MFOptionMessage(optName, optStr, options);
+            //return (CMfailed);
+    //}
     MFDefLeaving("HydroPower");
-    return (_MDOutHydroPoweID);
+    return (_MDOutMegaWattID);
 }
 

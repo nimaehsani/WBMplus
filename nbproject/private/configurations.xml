@@ -2,13 +2,9 @@
 <configurationDescriptor version="89">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="WBMplus">
-      <df name="bin">
-      </df>
       <df name="include">
         <in>MD.h</in>
         <in>wbm.h</in>
-      </df>
-      <df name="obj">
       </df>
       <df name="src">
         <in>MDAccBalance.c</in>
@@ -34,6 +30,7 @@
         <in>MDDischarge.c</in>
         <in>MDEvapotransp.c</in>
         <in>MDGrossRad.c</in>
+        <in>MDHydroPower.c</in>
         <in>MDIrrGrossDemand.c</in>
         <in>MDIrrRefET.c</in>
         <in>MDIrrRefETFAO.c</in>
@@ -103,13 +100,13 @@
       </toolsSet>
       <compile>
         <compiledirpicklist>
-          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
           <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
         </compiledirpicklist>
         <compiledir>${AUTO_FOLDER}</compiledir>
         <compilecommandpicklist>
-          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
           <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
         </compilecommandpicklist>
         <compilecommand>${AUTO_COMPILE}</compilecommand>
       </compile>
