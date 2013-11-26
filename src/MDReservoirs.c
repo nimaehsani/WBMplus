@@ -208,7 +208,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     float mtdInflow;       // Total Monthly (Up to that Date) InFlow
     float avmtdInflow;     // Average Monthly (Up to that Date) InFlow
     float mtdRelease;      // Total Monthly (Up to that Date) Release
-    float avmtdRelease;    // Average Monthly (Up to that Date) Release
+    //float avmtdRelease;    // Average Monthly (Up to that Date) Release
     float I1[3][1];        // Input to ANN (ANNOUTPUT.c) 
     float I2[2][1];        // Input to ANN (ANNOUTPUT.c) 
     float I3;              // Input to ANN (ANNOUTPUT.c) 
