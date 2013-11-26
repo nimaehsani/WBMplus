@@ -27,8 +27,8 @@ extern "C" {
 #define MDOptIrrigation                      "Irrigation"
 #define MDOptModel                           "Model"
 #define MDOptReservoirs                      "Reservoirs"
-//#define MDOptHydroPower                     "HydroPower"
-//#define MDOptHydroElectricity                     "HydroElectricity"
+#define MDOptHydroPower                     "HydroPower"
+#define MDOptHydroElectricity                     "HydroElectricity"
 #define MDOptRiverbed                        "Riverbed"
 #define MDOptRunoff							 "RunoffSwitch"		//RJS 111710
 #define MDOptRouting                         "Routing"

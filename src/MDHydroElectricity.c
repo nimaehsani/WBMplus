@@ -51,20 +51,20 @@ static void _MDHydroPower (int itemID) {
     }
 }
 
-enum { MDnone, MDinput, MDcalculate };
+enum { MDnone, MDcalculate };
 
 int MDHydroPowerDef() {
-/*	int  optID = MFUnset;
-	const char *optStr, *optName = MDOptHydroElectricity;
-	const char *options [] = { MDNoneStr, MDInputStr, MDCalculateStr, (char *) NULL };
+	int  optID = MFUnset;
+	const char *optStr, *optName = MDVarHydroPower;
+	const char *options [] = { MDInputStr, MDCalculateStr, (char *) NULL };
 
-	if ((optStr = MFOptionGet (optName)) != (char *) NULL) optID = CMoptLookup (options, optStr, true);
-	if ((optID == MDnone) || (_MDOutMegaWattID != MFUnset)) return (_MDOutMegaWattID);
-*/
+	//if (_MDOutMegaWattID != MFUnset) return (_MDOutMegaWattID);
+        if ((optID == MDnone) || (_MDOutMegaWattID != MFUnset)) return (_MDOutMegaWattID);
     MFDefEntering("HydroElectricity");
-/*    switch (optID) {
+    if ((optStr = MFOptionGet (optName)) != (char *) NULL) optID = CMoptLookup (options, optStr, true);
+    switch (optID) {
         case MDcalculate:
-*/            if (  ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
+            if (  ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInMaxHydroCapID    = MFVarGetID(MDVarMaxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
@@ -73,11 +73,10 @@ int MDHydroPowerDef() {
                     ((_MDOutMegaWattID      = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFInitial))  == CMfailed) ||
                     ((MFModelAddFunction(_MDHydroPower) == CMfailed))
                     ) return (CMfailed);
-/*            break;
-        default: MFOptionMessage(optName, optStr, options);
-            return (CMfailed);
+			break;
+		default: MFOptionMessage (optName, optStr, options); return (CMfailed);
     }
-*/    MFDefLeaving("HydroElectricity");
+    MFDefLeaving("HydroElectricity");
     return (_MDOutMegaWattID);
 }
 
