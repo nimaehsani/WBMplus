@@ -35,7 +35,6 @@ OBJS = $(OBJ)/WBMMain.o\
        $(OBJ)/MDDischMean.o\
        $(OBJ)/MDEvapotransp.o\
        $(OBJ)/MDGrossRad.o\
-       #$(OBJ)/MDHydroPower.o\#
        $(OBJ)/MDHydroElectricity.o\
        $(OBJ)/MDLandCover.o\
        $(OBJ)/MDLSAreaIndex.o\
