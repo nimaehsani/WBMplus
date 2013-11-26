@@ -509,6 +509,7 @@ int MDIrrSoilMoistChgDef();
 int MDIrrUptakeRiverDef();
 int MDIrrUptakeGrdWaterDef();
 int MDReservoirDef();
+int MDHydroPowerDef();
 int MDLandCoverDef();
 int MDLeafAreaIndexDef();
 int MDRainInfiltrationDef();
