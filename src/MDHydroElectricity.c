@@ -55,8 +55,8 @@ enum { MDnone, MDcalculate };
 
 int MDHydroPowerDef() {
 	int  optID = MFUnset;
-	const char *optStr, *optName = MDVarHydroPower;
-	const char *options [] = { MDInputStr, MDCalculateStr, (char *) NULL };
+	const char *optStr, *optName = MDOptHydroPower;
+	const char *options [] = { MDNoneStr, MDCalculateStr, (char *) NULL };
 
 	//if (_MDOutMegaWattID != MFUnset) return (_MDOutMegaWattID);
         if ((optID == MDnone) || (_MDOutMegaWattID != MFUnset)) return (_MDOutMegaWattID);
