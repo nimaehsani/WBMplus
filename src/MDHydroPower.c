@@ -40,13 +40,13 @@ static void _MDHydroGeneration(int itemID) {
     float a; // Y = a X^2
 
     if ((maxhydropcap = MFVarGetFloat(_MDInMAxHydroCapID,  itemID, 0.0)) <= 0.0) {
-        resCapacity   = MFVarGetFloat(_MDInResCapacityID,  itemID, 0.0)
+        resCapacity   = MFVarGetFloat(_MDInResCapacityID,  itemID, 0.0);
         resrelease    = MFVarGetFloat(_MDInResReleaseID,   itemID, 0.0);
         resstorage    = MFVarGetFloat(_MDInResStorageID,   itemID, 0.0);
         resmaxH       = MFVarGetFloat(_MDInResMaxHeightID, itemID, 0.0);
 
-        a = (2 * resCapacity / (3.14 * resmaxH^2))^0.5;
-        resH = (2 * resstorage / (3.14 * a^2))^0.5;
+        a = sqrt(2 * resCapacity / (3.14 * (pow(resmaxH,2))));
+        resH = sqrt(2 * resstorage / (3.14 * (pow(a,2))));
         hydrogen = 0.9 * 9810 * resH * resrelease / 1000000; // Power Generation in MEga Watt
         if (hydrogen > maxhydropcap) {
             hydrogen = maxhydropcap;
@@ -79,7 +79,7 @@ int MDHydroPowerDef() {
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFOutput, MFState, MFInitial))  == CMfailed) ||
-                    ((_MDInResReleaseID     = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
+                    ((_MDInResReleaseID     = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) 
                     ) return (CMfailed);
             break;
         default: MFOptionMessage(optName, optStr, options);
