@@ -54,29 +54,30 @@ static void _MDHydroPower (int itemID) {
 enum { MDnone, MDinput, MDcalculate };
 
 int MDHydroPowerDef() {
-	int  optID = MFUnset;
+/*	int  optID = MFUnset;
 	const char *optStr, *optName = MDOptHydroElectricity;
 	const char *options [] = { MDNoneStr, MDInputStr, MDCalculateStr, (char *) NULL };
 
 	if ((optStr = MFOptionGet (optName)) != (char *) NULL) optID = CMoptLookup (options, optStr, true);
 	if ((optID == MDnone) || (_MDOutMegaWattID != MFUnset)) return (_MDOutMegaWattID);
-
+*/
     MFDefEntering("HydroElectricity");
-    switch (optID) {
+/*    switch (optID) {
         case MDcalculate:
-            if (    ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
+*/            if (  ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
+                    ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInMaxHydroCapID    = MFVarGetID(MDVarMaxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
-                    ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFInput,  MFState,  MFInitial))  == CMfailed) ||
+                    //((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFInput,  MFState,  MFInitial))  == CMfailed) ||
                     ((_MDOutMegaWattID      = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFInitial))  == CMfailed) ||
                     ((MFModelAddFunction(_MDHydroPower) == CMfailed))
                     ) return (CMfailed);
-            break;
+/*            break;
         default: MFOptionMessage(optName, optStr, options);
             return (CMfailed);
     }
-    MFDefLeaving("HydroElectricity");
+*/    MFDefLeaving("HydroElectricity");
     return (_MDOutMegaWattID);
 }
 
