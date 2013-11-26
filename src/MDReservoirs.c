@@ -213,7 +213,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     float I2[2][1];        // Input to ANN (ANNOUTPUT.c) 
     float I3;              // Input to ANN (ANNOUTPUT.c) 
     float ANN;
-    float resStorage=0.0;      // Reservoir storage [m3]
+    float resStorage;      // Reservoir storage [m3]
     float resStorageChg;   // Reservoir storage change [m3/dt]
     float resRelease;      // Reservoir release [m3/s]
     float res_release_t_1; // STANDARD Reservoir release (resRelease) [m3/s]
@@ -356,7 +356,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         }
 
         resStorageChg = (discharge - ANN)*3600 * 24;
-        minresStorage = resCapacity * 0.25;
+        minresStorage = resCapacity * 0.05;
 
         if (prevResStorage + resStorageChg < resCapacity && prevResStorage + resStorageChg > minresStorage) {
             SIMOUT = ANN;

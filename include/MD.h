@@ -27,6 +27,7 @@ extern "C" {
 #define MDOptIrrigation                      "Irrigation"
 #define MDOptModel                           "Model"
 #define MDOptReservoirs                      "Reservoirs"
+#define MDOptHydroPower                     "HydroPower"
 #define MDOptRiverbed                        "Riverbed"
 #define MDOptRunoff							 "RunoffSwitch"		//RJS 111710
 #define MDOptRouting                         "Routing"
@@ -240,7 +241,14 @@ extern "C" {
 #define MDVarMonthToDayRelease                  "TotalReservoirReleaseUpToDate"
 #define MDVarReservoirRelease                   "ReservoirRelease"
 
-
+// NIMA HYDRO POWER
+    
+#define MDVarResMaxHeight                       "MaxReservoirHEight"
+#define MDVarMAxHydroCap                       "MaxHydroGenerationCapacity"  
+#define MDVarHydroPowerGeneration              "HydroPowerGeneration" 
+ 
+    
+    
 #define MDVarRelHumidity                     "RelativeHumidity"
 #define MDVarRelSoilMoisture                 "RelativeSoilMoisture"	
 #define MDVarRiverbedAvgDepthMean            "RiverbedAvgDepthMean"
