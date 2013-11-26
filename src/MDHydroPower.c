@@ -24,12 +24,9 @@ static int _MDInMAxHydroCapID  = MFUnset;
 static int _MDInResReleaseID   = MFUnset;
 
 // Output
+static int _MDOutHydroPowerID = MFUnset;
 
-static int _MDOutHydroPowerGenerationID = MFUnset;
-
-static void _MDHydroPowerGen(int itemID) {
-
-
+static void _MDHydroPower(int itemID) {
     float resstorage; // Reservoir storage [m3]
     float resrelease; // Reservoir release [m3/s]
     float resCapacity; // Reservoir capacity [m3]
@@ -39,7 +36,7 @@ static void _MDHydroPowerGen(int itemID) {
     float hydrogen;
     float a; // Y = a X^2
 
-    if ((maxhydropcap = MFVarGetFloat(_MDInMAxHydroCapID,  itemID, 0.0)) <= 0.0) {
+    if ((maxhydropcap = MFVarGetFloat(_MDInMAxHydroCapID,  itemID, 0.0)) > 0.0) {
         resCapacity   = MFVarGetFloat(_MDInResCapacityID,  itemID, 0.0);
         resrelease    = MFVarGetFloat(_MDInResReleaseID,   itemID, 0.0);
         resstorage    = MFVarGetFloat(_MDInResStorageID,   itemID, 0.0);
@@ -51,40 +48,36 @@ static void _MDHydroPowerGen(int itemID) {
         if (hydrogen > maxhydropcap) {
             hydrogen = maxhydropcap;
         }
-        MFVarSetFloat(_MDOutHydroPowerGenerationID, itemID, hydrogen);
-
+        MFVarSetFloat(_MDOutHydroPowerID, itemID, hydrogen);
     }
 }
 
+enum { MDnone, MDcalculate };
 
-enum { MDnone, MDinput, MDcalculate };
-
-
-int MDHydroPowerGenDef() {
+int MDHydroPowerDef() {
     int optID = MFUnset;
     const char *optStr, *optName = MDOptHydroPower;
     const char *options [] = {MDNoneStr, MDCalculateStr, (char *) NULL};
 
     if ((optStr = MFOptionGet(optName)) != (char *) NULL) optID = CMoptLookup(options, optStr, true);
+    if ((optID == MDnone) || (_MDOutHydroPowerID != MFUnset)) return (_MDOutHydroPowerID);
 
-    if ((optID == MDnone) || (_MDOutHydroPowerGenerationID != MFUnset)) return (_MDOutHydroPowerGenerationID);
-
-    MFDefEntering("HydroPowerGen");
+    MFDefEntering("HydroPower");
     switch (optID) {
         case MDcalculate:
-            if (    ((MFModelAddFunction(_MDHydroPowerGen) == CMfailed)) || 
-                    ((_MDInMAxHydroCapID    = MFVarGetID(MDVarMAxHydroCap,                  "MW",   MFInput,  MFFlux, MFBoundary)) == CMfailed) ||
-                    ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFInput, MFState, MFInitial))  == CMfailed) ||
-                    ((_MDInResReleaseID     = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFInput, MFFlux,  MFBoundary)) == CMfailed) ||
-                    ((_MDOutHydroPowerGenerationID     = MFVarGetID(MDVarHydroPowerGeneration,             "MW", MFOutput, MFFlux,  MFInitial)) == CMfailed) 
+            if (    ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed)
+                    ((_MDInMAxHydroCapID    = MFVarGetID(MDVarMAxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
+                    ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
+                    ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
+                    ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3",   MFInput,  MFState,  MFInitial))  == CMfailed) ||
+                    ((_MDOutHydroPowerID    = MFVarGetID(MDVarHydroPower,                   "MW",   MFOutput, MFState,  MFInitial))  == CMfailed) ||
+                    ((MFModelAddFunction(_MDHydroPower) == CMfailed))
                     ) return (CMfailed);
             break;
         default: MFOptionMessage(optName, optStr, options);
             return (CMfailed);
     }
-    MFDefLeaving("HydroPowerGen");
-    return (_MDOutHydroPowerGenerationID);
+    MFDefLeaving("HydroPower");
+    return (_MDOutHydroPoweID);
 }
 
