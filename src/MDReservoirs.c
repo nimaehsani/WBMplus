@@ -527,6 +527,7 @@ int MDReservoirDef() {
 
             if (    ((_MDInAvgNStepsID          = MDAvgNStepsDef ())  == CMfailed) ||
                     ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
+                    ((_MDInMegaWattID           = MDHydroPowerDef())  == CMfailed) ||
                     ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
                     ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
@@ -552,12 +553,12 @@ int MDReservoirDef() {
 	    	return (CMfailed);
             }
             
-   */           if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
+              if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
 		      if ((_MDInMegaWattID =MDHydroPowerDef()) == CMfailed) return (CMfailed);
                       if (((_MDInMegaWattID       = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFInitial))  == CMfailed))
 	    	      return (CMfailed);
             }
-        break;
+*/        break;
         default: MFOptionMessage(optName, optStr, options);
             return (CMfailed);
     }
