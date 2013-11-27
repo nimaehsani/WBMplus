@@ -15,7 +15,8 @@ enum { MDpet, MDsurplus, MDinfiltration, MDrunoff, MDdischarge,  MDbalance, MDwa
 
 int main (int argc,char *argv []) {
 	int argNum;
-	int  optID = MDbalance;
+	//int  optID = MDbalance;
+        int optID = MFUnset;
 	const char *optStr, *optName = MDOptModel;
 	const char *options [] = { "pet", "surplus", "infiltration", "runoff", "discharge",  "balance", "watertemp", "thermal",  "geometry", "bgc", "bgc_DOC", "bgc_DIN", "bgc_DINPLUSBIOMASS", "HydroElectricity", /*"fecal",*/ (char *) NULL };
 
