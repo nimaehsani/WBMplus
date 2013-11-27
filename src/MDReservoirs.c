@@ -523,6 +523,7 @@ int MDReservoirDef() {
                     (MFModelAddFunction(_MDReservoirDW) == CMfailed)) return (CMfailed);
             break;
         case MDneuralnet:
+
             if (    ((_MDInAvgNStepsID          = MDAvgNStepsDef ())  == CMfailed) ||
                     ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
                     ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
@@ -544,6 +545,11 @@ int MDReservoirDef() {
                     ((_MDOutResRelease_t_2_ID   = MFVarGetID(MDVarResRelease_t_2_,        "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
                     ((_MDOutResRelease_t_3_ID   = MFVarGetID(MDVarResRelease_t_3_,        "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
                     (MFModelAddFunction(_MDReservoirNeuralNet) == CMfailed)) return (CMfailed);
+            
+            
+            if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
+		if ((_MDOutMegaWattID =(MDHydroPowerDef)) == CMfailed) return (CMfailed);
+            }
             break;
         default: MFOptionMessage(optName, optStr, options);
             return (CMfailed);

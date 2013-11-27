@@ -65,7 +65,7 @@ int MDHydroPowerDef() {
     
     switch (optID) {
         case MDcalculate:
-            if (  ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
+            if (    ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInMaxHydroCapID    = MFVarGetID(MDVarMaxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
