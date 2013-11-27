@@ -547,15 +547,17 @@ int MDReservoirDef() {
                     ((_MDOutResRelease_t_3_ID   = MFVarGetID(MDVarResRelease_t_3_,        "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
                     (MFModelAddFunction(_MDReservoirNeuralNet) == CMfailed)) return (CMfailed);
             
-            if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
+  /*           if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
 		if (((_MDInMegaWattID       = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFInitial))  == CMfailed))
 	    	return (CMfailed);
-            
-            
-  /*           if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
-		if ((_MDInMegaWattID =MDHydroPowerDef()) == CMfailed) return (CMfailed);
             }
-  */        break;
+            
+   */           if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
+		      if ((_MDInMegaWattID =MDHydroPowerDef()) == CMfailed) return (CMfailed);
+                      if (((_MDInMegaWattID       = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFInitial))  == CMfailed))
+	    	      return (CMfailed);
+            }
+        break;
         default: MFOptionMessage(optName, optStr, options);
             return (CMfailed);
     }
