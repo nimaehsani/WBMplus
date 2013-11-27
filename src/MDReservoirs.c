@@ -25,7 +25,7 @@ Reservoir Operation.
 static int _MDInDischargeID          = MFUnset;
 static int _MDInDischMeanID          = MFUnset;
 static int _MDInResCapacityID        = MFUnset;
-static int _MDIntMegaWattID = MFUnset;
+static int _MDInMegaWattID = MFUnset;
 
 // Output
 static int _MDOutResStorageID        = MFUnset;

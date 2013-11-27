@@ -49,6 +49,10 @@ static void _MDHydroPower (int itemID) {
         }
         MFVarSetFloat(_MDOutMegaWattID, itemID, hydrogen);
     }
+    else {
+        MFVarSetFloat(_MDOutMegaWattID, itemID, 0.0);
+        return;
+    }
 }
 
 enum { MDnone, MDcalculate };
