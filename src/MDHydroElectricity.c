@@ -4,7 +4,7 @@ GHAAS Water Balance/Transport Model V3.0
 Global Hydrologic Archive and Analysis System
 Copyright 1994-2013, UNH - CCNY/CUNY
 
-MDHydroPower.c
+MDHydroElectricity.c
 
 nehsani00@ccny.cuny.edu
 
@@ -58,10 +58,11 @@ int MDHydroPowerDef() {
 	const char *optStr, *optName = MDOptHydroPower;
 	const char *options [] = { MDNoneStr, MDCalculateStr, (char *) NULL };
 
-	//if (_MDOutMegaWattID != MFUnset) return (_MDOutMegaWattID);
+	if ((optStr = MFOptionGet (optName)) != (char *) NULL) optID = CMoptLookup (options, optStr, true);
         if ((optID == MDnone) || (_MDOutMegaWattID != MFUnset)) return (_MDOutMegaWattID);
+        
     MFDefEntering("HydroElectricity");
-    if ((optStr = MFOptionGet (optName)) != (char *) NULL) optID = CMoptLookup (options, optStr, true);
+    
     switch (optID) {
         case MDcalculate:
             if (  ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
