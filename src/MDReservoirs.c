@@ -25,6 +25,7 @@ Reservoir Operation.
 static int _MDInDischargeID          = MFUnset;
 static int _MDInDischMeanID          = MFUnset;
 static int _MDInResCapacityID        = MFUnset;
+static int _MDIntMegaWattID = MFUnset;
 
 // Output
 static int _MDOutResStorageID        = MFUnset;
@@ -45,9 +46,6 @@ static int _MDOutMonthToDayInFlowID  = MFUnset;
 static int _MDOutMonthToDayReleaseID = MFUnset;
 //static int _MDOutReservoirReleaseID  = MFUnset;
 static int _MDInAvgNStepsID          = MFUnset;
-
-
-static int _MDOutMegaWattID = MFUnset;
 
 static float ANNOUTPUT(float I1[3][1], float I2[2][1], float I3) {
 
@@ -551,7 +549,7 @@ int MDReservoirDef() {
             
             
             if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
-		if ((_MDOutMegaWattID =(MDHydroPowerDef)) == CMfailed) return (CMfailed);
+		if ((_MDInMegaWattID =(MDHydroPowerDef)) == CMfailed) return (CMfailed);
             }
             break;
         default: MFOptionMessage(optName, optStr, options);
