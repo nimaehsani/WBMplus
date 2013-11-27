@@ -22,6 +22,7 @@ static int _MDInResStorageID   = MFUnset;
 static int _MDInResMaxHeightID = MFUnset;
 static int _MDInMaxHydroCapID  = MFUnset;
 static int _MDInResReleaseID   = MFUnset;
+static int _MDInAvgNStepsID    = MFUnset;
 // Output
 static int _MDOutMegaWattID = MFUnset;
 
@@ -34,6 +35,11 @@ static void _MDHydroPower (int itemID) {
     float maxhydropcap;
     float hydrogen;
     float a; // Y = a X^2
+    int nSteps;
+    
+    if ((nSteps     = MFVarGetInt   (_MDInAvgNStepsID,       itemID,   0)) <= 2) {
+        return;
+    }
 
     if ((maxhydropcap = MFVarGetFloat(_MDInMaxHydroCapID,  itemID, 0.0)) > 0.0) {
         resCapacity   = MFVarGetFloat(_MDInResCapacityID,  itemID, 0.0);
@@ -69,7 +75,8 @@ int MDHydroPowerDef() {
     
     switch (optID) {
         case MDcalculate:
-            if (    ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
+            if (    ((_MDInAvgNStepsID      = MDAvgNStepsDef() )  == CMfailed) ||
+                    ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInMaxHydroCapID    = MFVarGetID(MDVarMaxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
