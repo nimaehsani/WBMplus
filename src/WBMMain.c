@@ -11,13 +11,13 @@ balazs.fekete@unh.edu
 *******************************************************************************/
 #include <wbm.h>
 
-enum { MDpet, MDsurplus, MDinfiltration, MDrunoff, MDdischarge,  MDwatertemp, MDthermal, MDbalance, MDgeometry, MDbgc, MDbgc_DIN, MDbgc_DINPLUSBIOMASS, MDbgc_DOC, MDHydroElectricity, MDfecal};
+enum { MDpet, MDsurplus, MDinfiltration, MDrunoff, MDdischarge,  MDbalance, MDwatertemp, MDthermal, MDgeometry, MDbgc, MDbgc_DOC, MDbgc_DIN, MDbgc_DINPLUSBIOMASS, MDHydroElectricity/*, MDfecal*/};
 
 int main (int argc,char *argv []) {
 	int argNum;
 	int  optID = MDbalance;
 	const char *optStr, *optName = MDOptModel;
-	const char *options [] = { "pet", "surplus", "infiltration", "runoff", "discharge",  "watertemp", "thermal", "balance", "geometry", "bgc", "bgc_DIN","bgc_DINPLUSBIOMASS", "bgc_DOC", "HydroElectricity", "fecal", (char *) NULL };
+	const char *options [] = { "pet", "surplus", "infiltration", "runoff", "discharge",  "balance", "watertemp", "thermal",  "geometry", "bgc", "bgc_DOC", "bgc_DIN", "bgc_DINPLUSBIOMASS", "HydroElectricity", /*"fecal",*/ (char *) NULL };
 
 	argNum = MFOptionParse (argc,argv);
 
