@@ -46,6 +46,9 @@ static int _MDOutMonthToDayReleaseID = MFUnset;
 //static int _MDOutReservoirReleaseID  = MFUnset;
 static int _MDInAvgNStepsID          = MFUnset;
 
+
+static int _MDOutMegaWattID = MFUnset;
+
 static float ANNOUTPUT(float I1[3][1], float I2[2][1], float I3) {
 
     float FirstLayerBias[6][1] = {
