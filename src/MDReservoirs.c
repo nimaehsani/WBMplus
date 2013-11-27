@@ -25,7 +25,7 @@ Reservoir Operation.
 static int _MDInDischargeID          = MFUnset;
 static int _MDInDischMeanID          = MFUnset;
 static int _MDInResCapacityID        = MFUnset;
-static int _MDInMegaWattID = MFUnset;
+//static int _MDInMegaWattID = MFUnset;
 
 // Output
 static int _MDOutResStorageID        = MFUnset;
@@ -527,7 +527,7 @@ int MDReservoirDef() {
 
             if (    ((_MDInAvgNStepsID          = MDAvgNStepsDef ())  == CMfailed) ||
                     ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
-                    ((_MDInMegaWattID           = MDHydroPowerDef())  == CMfailed) ||
+                    //((_MDInMegaWattID           = MDHydroPowerDef())  == CMfailed) ||
                     ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
                     ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||

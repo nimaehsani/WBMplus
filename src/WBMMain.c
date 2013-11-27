@@ -11,13 +11,13 @@ balazs.fekete@unh.edu
 *******************************************************************************/
 #include <wbm.h>
 
-enum { MDpet, MDsurplus, MDinfiltration, MDrunoff, MDdischarge,  MDwatertemp, MDthermal, MDbalance, MDgeometry, MDbgc, MDbgc_DIN, MDbgc_DINPLUSBIOMASS, MDbgc_DOC, MDfecal};
+enum { MDpet, MDsurplus, MDinfiltration, MDrunoff, MDdischarge,  MDwatertemp, MDthermal, MDbalance, MDgeometry, MDbgc, MDbgc_DIN, MDbgc_DINPLUSBIOMASS, MDbgc_DOC, MDHydroElectricity, MDfecal};
 
 int main (int argc,char *argv []) {
 	int argNum;
 	int  optID = MDbalance;
 	const char *optStr, *optName = MDOptModel;
-	const char *options [] = { "pet", "surplus", "infiltration", "runoff", "discharge",  "watertemp", "thermal", "balance", "geometry", "bgc", "bgc_DIN","bgc_DINPLUSBIOMASS", "bgc_DOC", "fecal", (char *) NULL };
+	const char *options [] = { "pet", "surplus", "infiltration", "runoff", "discharge",  "watertemp", "thermal", "balance", "geometry", "bgc", "bgc_DIN","bgc_DINPLUSBIOMASS", "bgc_DOC", "HydroElectricity", "fecal", (char *) NULL };
 
 	argNum = MFOptionParse (argc,argv);
 
@@ -31,12 +31,13 @@ int main (int argc,char *argv []) {
 		case MDdischarge:    return (MFModelRun (argc,argv,argNum,MDDischargeDef));
 		case MDbalance:      return (MFModelRun (argc,argv,argNum,MDWaterBalanceDef));
 		case MDwatertemp:    return (MFModelRun (argc,argv,argNum,MDWTempRiverRouteDef));
-		case MDthermal:		return (MFModelRun (argc,argv,argNum,MDThermalInputsDef));		// RJS 013112
+		case MDthermal:	     return (MFModelRun (argc,argv,argNum,MDThermalInputsDef));		// RJS 013112
 		case MDgeometry:     return (MFModelRun (argc,argv,argNum,MDRiverWidthDef));
 		case MDbgc:          return (MFModelRun (argc,argv,argNum,MDBgcRoutingDef));
 		case MDbgc_DOC:      return (MFModelRun (argc,argv,argNum,MDBgcDOCRoutingDef));
 		case MDbgc_DIN:      return (MFModelRun (argc,argv,argNum,MDBgcDINRoutingDef));
 		case MDbgc_DINPLUSBIOMASS:    return (MFModelRun (argc,argv,argNum,MDBgcDINPlusBiomassRoutingDef));
+                case MDHydroElectricity:      return (MFModelRun (argc,argv,argNum,MDHydroPowerDef));
 		default: MFOptionMessage (optName, optStr, options); return (CMfailed);
 	}
 	return (CMfailed);
