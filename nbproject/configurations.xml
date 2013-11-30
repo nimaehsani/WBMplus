@@ -29,6 +29,7 @@
         <in>MDDischarge.c</in>
         <in>MDEvapotransp.c</in>
         <in>MDGrossRad.c</in>
+        <in>MDHydroElectricity.c</in>
         <in>MDIrrGrossDemand.c</in>
         <in>MDIrrRefET.c</in>
         <in>MDIrrRefETFAO.c</in>
@@ -86,6 +87,7 @@
         <in>MDWetlands.c</in>
         <in>MDWind.c</in>
         <in>WBMMain.c</in>
+        <in>newscript.sh</in>
       </df>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -179,6 +181,8 @@
       <item path="src/MDEvapotransp.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/MDGrossRad.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="src/MDHydroElectricity.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/MDIrrGrossDemand.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -293,6 +297,8 @@
       <item path="src/MDWind.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/WBMMain.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="src/newscript.sh" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

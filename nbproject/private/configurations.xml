@@ -30,7 +30,7 @@
         <in>MDDischarge.c</in>
         <in>MDEvapotransp.c</in>
         <in>MDGrossRad.c</in>
-        <in>MDHydroPower.c</in>
+        <in>MDHydroElectricity.c</in>
         <in>MDIrrGrossDemand.c</in>
         <in>MDIrrRefET.c</in>
         <in>MDIrrRefETFAO.c</in>
@@ -88,6 +88,7 @@
         <in>MDWetlands.c</in>
         <in>MDWind.c</in>
         <in>WBMMain.c</in>
+        <in>newscript.sh</in>
       </df>
     </df>
   </logicalFolder>
