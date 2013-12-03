@@ -353,11 +353,11 @@ static void _MDReservoirNeuralNet(int itemID) {
 
         prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0);
         if (prevResStorage == 0){
-            prevResStorage= 0.5*resCapacity;
+            prevResStorage= 1*resCapacity;
         }
 
         resStorageChg = (discharge - ANN)*3600 * 24;
-        minresStorage = resCapacity * 0.05;
+        minresStorage = resCapacity * 0;
 
         if (prevResStorage + resStorageChg < resCapacity && prevResStorage + resStorageChg > minresStorage) {
             SIMOUT = ANN;
@@ -389,6 +389,29 @@ static void _MDReservoirNeuralNet(int itemID) {
                 SIMOUT= -SIMOUT;
             }
         }   
+        
+        
+        
+////////////////////////////////////////////
+    ////////////////////////////////////////////
+         if (SIMOUT == 0) {
+                if (discharge == 0) {
+                SIMOUT = prevResStorage*0.002/(3600*24);
+                resStorage = resStorage - SIMOUT * 3600 * 24;
+                } else {
+                   SIMOUT = prevResStorage*0.002/(3600*24);
+                resStorage = resStorage - SIMOUT * 3600 * 24;
+                }
+                if (SIMOUT <= 0) {
+                    printf("Error: Negative Reservoir Release! You Fucked Up! Only USGS And USACE Are Allowed To Do That!\n");
+                }
+                if (resStorage <= 0) {
+                        printf("Error: Negative Reservoir Storage! You Fucked Up! Only USGS And USACE Are Allowed To Do That!\n");
+                }
+
+        }
+ ///////////////////////////////////////////////
+        /////////////////////////////////////////
 
         mtdRelease = MFVarGetFloat(_MDOutMonthToDayReleaseID, itemID, 0.0);
         if (lastmonth == m) {
@@ -521,6 +544,7 @@ int MDReservoirDef() {
                     ((_MDOutResStorageID    = MFVarGetID(MDVarReservoirStorage,             "km3",  MFOutput, MFState, MFInitial))  == CMfailed) ||
                     ((_MDOutResStorageChgID = MFVarGetID(MDVarReservoirStorageChange,       "km3",  MFOutput, MFState, MFBoundary)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
                     ((_MDOutResReleaseID    = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
+                    
                     (MFModelAddFunction(_MDReservoirDW) == CMfailed)) return (CMfailed);
             break;
         case MDneuralnet:

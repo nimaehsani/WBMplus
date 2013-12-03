@@ -34,8 +34,7 @@ static void _MDHydroPower (int itemID) {
     float resH;
     float maxhydropcap;
     float hydrogen;
-    float R; // Y = a X^2
-    float tga;
+
     int nSteps;
     
     if ((nSteps     = MFVarGetInt   (_MDInAvgNStepsID,       itemID,   0)) <= 2) {
@@ -48,11 +47,27 @@ static void _MDHydroPower (int itemID) {
         resstorage    = MFVarGetFloat(_MDInResStorageID,   itemID, 0.0);
         resmaxH       = MFVarGetFloat(_MDInResMaxHeightID, itemID, 0.0);
 
-        //a = sqrt(2 * resCapacity / (3.14 * (pow(resmaxH,2))));
-       // resH = sqrt(2 * resstorage / (3.14 * (pow(a,2))));
+//////////////////////////////////////////////////////////////////////
+//////////Reservoir as a paraboloid////////////////////////////    
+///////////////////////////////////////////////////////////////////
+  /*     
+        float a;
+        a = 2 * resCapacity / (3.14 * (pow(resmaxH,2)));
+        resH = sqrt(2 * resstorage / (3.14 * a));
+  */      
+/////////////////////////////////////////////
+//////Reservoir As a Cone///////////////////
+////////////////////////////////////////////  
+        
+        float R; 
+        float tga;
         R=sqrt(3*resCapacity/(3.14*resmaxH));
         tga=R/resmaxH;
         resH=pow((3*resstorage/(3.14*pow(tga,2))),1/3);
+////////////////////////////////////////////////
+//////////////////////////////////////////////////
+        
+        
         
         
         hydrogen = 0.9 * 9810 * resH * resrelease / 1000000; // Power Generation in MEga Watt
