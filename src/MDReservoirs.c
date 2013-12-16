@@ -12,9 +12,7 @@ dominik.wisser@unh.edu
 Updated with a Neural Network function for 
 Reservoir Operation.
 2013 NE
-
  *******************************************************************************/
-
 
 #include <cm.h>
 #include <MF.h>
