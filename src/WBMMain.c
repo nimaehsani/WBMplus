@@ -11,14 +11,14 @@ balazs.fekete@unh.edu
 *******************************************************************************/
 #include <wbm.h>
 
-enum { MDpet, MDsurplus, MDinfiltration, MDrunoff, MDdischarge,  MDbalance, MDwatertemp, MDthermal, MDgeometry, MDbgc, MDbgc_DOC, MDbgc_DIN, MDbgc_DINPLUSBIOMASS, MDHydroElectricity/*, MDfecal*/};
+enum { MDpet, MDsurplus, MDinfiltration, MDrunoff, MDdischarge,  MDbalance, MDwatertemp, MDthermal, MDgeometry, MDbgc, MDbgc_DOC, MDbgc_DIN, MDbgc_DINPLUSBIOMASS, MDHydroElectricity, MDfecal};
 
 int main (int argc,char *argv []) {
 	int argNum;
 	int  optID = MDbalance;
         //int optID = MFUnset;
 	const char *optStr, *optName = MDOptModel;
-	const char *options [] = { "pet", "surplus", "infiltration", "runoff", "discharge",  "balance", "watertemp", "thermal",  "geometry", "bgc", "bgc_DOC", "bgc_DIN", "bgc_DINPLUSBIOMASS", "HydroElectricity", /*"fecal",*/ (char *) NULL };
+	const char *options [] = { "pet", "surplus", "infiltration", "runoff", "discharge",  "balance", "watertemp", "thermal",  "geometry", "bgc", "bgc_DOC", "bgc_DIN", "bgc_DINPLUSBIOMASS", "HydroElectricity", "fecal", (char *) NULL };
 
 	argNum = MFOptionParse (argc,argv);
 
@@ -38,7 +38,7 @@ int main (int argc,char *argv []) {
 		case MDbgc_DOC:      return (MFModelRun (argc,argv,argNum,MDBgcDOCRoutingDef));
 		case MDbgc_DIN:      return (MFModelRun (argc,argv,argNum,MDBgcDINRoutingDef));
 		case MDbgc_DINPLUSBIOMASS:    return (MFModelRun (argc,argv,argNum,MDBgcDINPlusBiomassRoutingDef));
-                case MDHydroElectricity:      return (MFModelRun (argc,argv,argNum,MDHydroPowerDef));
+              // case MDHydroElectricity:      return (MFModelRun (argc,argv,argNum,MDHydroPowerDef));
 		default: MFOptionMessage (optName, optStr, options); return (CMfailed);
 	}
 	return (CMfailed);
