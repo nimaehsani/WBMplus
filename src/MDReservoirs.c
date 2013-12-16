@@ -283,13 +283,13 @@ static void _MDReservoirNeuralNet(int itemID) {
         printf("release_min= %f \n" , release_min);
         */
 
-        if(m==0){
+ /*       if(m==0){
             m=2;
         }
         if (d==0){
             d=1;
         }
-        if (lastmonth == m) {
+*/        if (lastmonth == m) {
             mtdInflow   = mtdInflow + discharge;
             avmtdInflow = mtdInflow / d;
         } else {
@@ -315,7 +315,12 @@ static void _MDReservoirNeuralNet(int itemID) {
         I2[1][0] = res_release_t_2;
 */
         discharge_t_1   = discharge;
+<<<<<<< HEAD
         SD_t_1 = (discharge_t_1   - discharge_min) / (discharge_max - discharge_min);
+=======
+        //SD_t_1 = (avmtdInflow   - discharge_min) / (discharge_max - discharge_min);
+        SD_t_1 = (avmtdInflow   - discharge_min) / (discharge_max - discharge_min);
+>>>>>>> 6bf796c0afb6e819bb236b60056afea32c9bcf80
         SD_t_2 = (discharge_t_2 - discharge_min) / (discharge_max - discharge_min);
         SD_t_3 = (discharge_t_3 - discharge_min) / (discharge_max - discharge_min);
         
@@ -389,8 +394,8 @@ static void _MDReservoirNeuralNet(int itemID) {
        // printf("EXP: %f \n", exp (2));
 
         prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0);
-        if (prevResStorage == 0){
-            prevResStorage= 1*resCapacity;
+        if (prevResStorage == 0 && nSteps <=2){
+            prevResStorage= 0.5*resCapacity;
         }
 
         resStorageChg = (discharge - ANN)*3600 * 24;
@@ -431,7 +436,11 @@ static void _MDReservoirNeuralNet(int itemID) {
         
 ////////////////////////////////////////////
     ////////////////////////////////////////////
+<<<<<<< HEAD
 /*         if (SIMOUT == 0) {
+=======
+ /*        if (SIMOUT == 0) {
+>>>>>>> 6bf796c0afb6e819bb236b60056afea32c9bcf80
                 if (discharge == 0) {
                 SIMOUT = prevResStorage*0.002/(3600*24);
                 resStorage = resStorage - SIMOUT * 3600 * 24;
@@ -447,7 +456,12 @@ static void _MDReservoirNeuralNet(int itemID) {
                 }
 
         }
+<<<<<<< HEAD
  *////////////////////////////////////////////////
+=======
+  */ 
+ ///////////////////////////////////////////////
+>>>>>>> 6bf796c0afb6e819bb236b60056afea32c9bcf80
         /////////////////////////////////////////
 
         mtdRelease = MFVarGetFloat(_MDOutMonthToDayReleaseID, itemID, 0.0);
@@ -592,7 +606,7 @@ int MDReservoirDef() {
                     ((_MDOutResStorageID    = MFVarGetID(MDVarReservoirStorage,             "km3",  MFOutput, MFState, MFInitial))  == CMfailed) ||
                     ((_MDOutResStorageChgID = MFVarGetID(MDVarReservoirStorageChange,       "km3",  MFOutput, MFState, MFBoundary)) == CMfailed) || 
                     ((_MDOutResReleaseID    = MFVarGetID(MDVarReservoirRelease,             "m3/s", MFOutput, MFFlux,  MFBoundary)) == CMfailed) ||
-                    
+                     (                        MDHydroPowerDef()   == CMfailed) ||
                     (MFModelAddFunction(_MDReservoirDW) == CMfailed)) return (CMfailed);
             break;
         case MDneuralnet:
@@ -613,6 +627,7 @@ int MDReservoirDef() {
                     ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
                     //((_MDOutReservoirReleaseID  = MFVarGetID(MDVarReservoirRelease,     "m3/s", MFOutput, MFState, MFBoundary))== CMfailed) ||
                     ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) ||
+<<<<<<< HEAD
                     ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) || 
                     ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState,  MFInitial)) == CMfailed) ||
                     ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
@@ -620,6 +635,14 @@ int MDReservoirDef() {
                     ((_MDOutResRelease_t_3_ID   = MFVarGetID(MDVarResRelease_t_3_,        "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
 				(                        MDHydroPowerDef()   == CMfailed) ||
 				
+=======
+                    ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) || //RJS, changed MFBoundary o MFIniial
+                    ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFFlux,  MFInitial)) == CMfailed) ||
+                    ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
+                    ((_MDOutResRelease_t_2_ID   = MFVarGetID(MDVarResRelease_t_2_,        "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
+                    ((_MDOutResRelease_t_3_ID   = MFVarGetID(MDVarResRelease_t_3_,        "m3/s", MFOutput, MFFlux, MFInitial)) == CMfailed) ||
+                     (                        MDHydroPowerDef()   == CMfailed) ||
+>>>>>>> 6bf796c0afb6e819bb236b60056afea32c9bcf80
                     (MFModelAddFunction(_MDReservoirNeuralNet) == CMfailed)) return (CMfailed);
             
   /*           if (((optStr = MFOptionGet (MDOptHydroPower)) != (char *) NULL) && (CMoptLookup (options,optStr,true) == CMfailed)) {
