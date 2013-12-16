@@ -241,6 +241,11 @@ extern "C" {
 #define MDVarMonthToDayInFlow                   "TotalReservoirInflowUpToDate"
 #define MDVarMonthToDayRelease                  "TotalReservoirReleaseUpToDate"
 #define MDVarReservoirRelease                   "ReservoirRelease"
+#define MDVarPMonthInflow                    "PMonthInflow"
+#define MDVarPPMonthInflow                  "PPMonthInflow"
+#define MDVarPMonthRelease                    "PMonthRelease"
+#define MDVarPPMonthRelease                   "PPMonthRelease"   
+#define MDVarAVMTDRelease                 "AVMTDRelease"    
 
 // NIMA HYDRO POWER
 #define MDVarResMaxHeight                       "MaxReservoirHeight"
