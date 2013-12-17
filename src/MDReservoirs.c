@@ -334,7 +334,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0);
 
         resStorageChg = (discharge - ANN)*3600 * 24;
-        minresStorage = resCapacity * 0.0001;
+        minresStorage = resCapacity * 0;
 
         if (prevResStorage + resStorageChg <= resCapacity && prevResStorage + resStorageChg >= minresStorage) {
             SIMOUT = ANN;
@@ -387,7 +387,8 @@ static void _MDReservoirNeuralNet(int itemID) {
         }
             
         balance=3600*24*(discharge-resRelease)-(resStorage-prevResStorage);
-        if (balance>=0.01 && balance<= -0.01 && nSteps>2){
+        if (balance!=0){
+        //if (balance>=0.01 && balance<= -0.01 && nSteps>2){
                 printf("Error: Balance!    %f\n", balance);
         }
 
