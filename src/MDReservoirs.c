@@ -221,8 +221,9 @@ static void _MDReservoirNeuralNet(int itemID) {
     float balance;
 
     discharge = MFVarGetFloat(_MDInDischargeID, itemID, 0.0);
+    nSteps    = MFVarGetInt  (_MDInAvgNStepsID,   itemID,   0);
    
-    if ((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) {
+    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  nSteps<366 ){
                        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
                        MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
                        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
@@ -231,7 +232,6 @@ static void _MDReservoirNeuralNet(int itemID) {
         resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
         discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 0.0);
         discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0.0);
-        nSteps        = MFVarGetInt  (_MDInAvgNStepsID,   itemID,   0);
         
         if (nSteps <2){
             discharge_max = 5*discharge/3;
@@ -386,7 +386,7 @@ static void _MDReservoirNeuralNet(int itemID) {
             }
         }
             
-        balance=(3600*24*(discharge-resRelease))-(resStorage-prevResStorage);
+        balance=(discharge-resRelease)-(resStorage-prevResStorage)/(3600*24);
         if (balance!=0){
         //if (balance>=0.01 && balance<= -0.01 && nSteps>2){
                 printf("Error: Balance!    %f\n", balance);
