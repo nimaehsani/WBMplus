@@ -230,10 +230,10 @@ static void _MDReservoirNeuralNet(int itemID) {
         return;
     } 
         resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
-        discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 5*discharge/3);
-        discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID,   discharge/3);
+        discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 0);
+        discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0);
         
-        if (nSteps <2){
+/*        if (nSteps <2){
             discharge_max = 5*discharge/3;
             discharge_min = discharge/3;
         } else {
@@ -245,6 +245,26 @@ static void _MDReservoirNeuralNet(int itemID) {
             }
             }
         }
+  */
+        
+        if (discharge_max ==0){
+            if (discharge>0){
+                discharge_max=discharge;
+                discharge_min=discharge/2;
+            }else{
+                discharge_max=1;
+                discharge_min=1/2;
+            }
+        }
+        
+        if (discharge > discharge_max) {
+                discharge_max = discharge;
+            } else {
+            if (discharge < discharge_min) {
+                discharge_min = discharge;
+            }
+            }
+        
         release_max = discharge_max;
         release_min = discharge_min;
 /*        release_max = MFVarGetFloat(_MDOutReleaseMaxID,       itemID, 0);
