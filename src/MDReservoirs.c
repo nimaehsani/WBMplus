@@ -334,9 +334,9 @@ static void _MDReservoirNeuralNet(int itemID) {
         prevResStorage = MFVarGetFloat(_MDOutResStorageID, itemID, 0);
 
         resStorageChg = (discharge - ANN)*3600 * 24;
-        minresStorage = resCapacity * 0;
+        minresStorage = 0;
 
-        if (prevResStorage + resStorageChg <= resCapacity && prevResStorage + resStorageChg >= minresStorage) {
+        if ((prevResStorage + resStorageChg <= resCapacity) && (prevResStorage + resStorageChg >= minresStorage)) {
             SIMOUT = ANN;
             if (SIMOUT < 0) {
                 printf("Error: Negative release (1)! \n");
@@ -344,7 +344,7 @@ static void _MDReservoirNeuralNet(int itemID) {
             } 
             resStorage = prevResStorage + resStorageChg;
         } else {
-            if (prevResStorage + resStorageChg > resCapacity) {
+            if ((prevResStorage + resStorageChg) > resCapacity) {
                 SIMOUT = ((discharge * 3600 * 24)-(resCapacity - prevResStorage)) / (3600 * 24);
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (2)! \n");
@@ -386,10 +386,12 @@ static void _MDReservoirNeuralNet(int itemID) {
             }
         }
             
-        balance=3600*24*(discharge-resRelease)-(resStorage-prevResStorage);
+        balance=(3600*24*(discharge-resRelease))-(resStorage-prevResStorage);
         if (balance!=0){
         //if (balance>=0.01 && balance<= -0.01 && nSteps>2){
                 printf("Error: Balance!    %f\n", balance);
+                printf("ANN=%f SIMOUT=%f release_max=%f release_min=%f prevResStorage=%f resCapacity=%f resStorageChg=%f minresStorage=%f discharge=%f resRelease=%f resStorage=%f\n", ANN, SIMOUT, release_max, release_min, prevResStorage, resCapacity, resStorageChg, minresStorage, discharge, resRelease, resStorage);
+                
         }
 
         res_release_t_1 = resRelease;
