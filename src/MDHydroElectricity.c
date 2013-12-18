@@ -34,17 +34,17 @@ static void _MDHydroPower (int itemID) {
     float resH;
     float maxhydropcap;
     float hydrogen;
-    int nSteps;
+//    int nSteps;
     
-    if ((nSteps     = MFVarGetInt   (_MDInAvgNStepsID,       itemID,   0)) <= 2) {
-        return;
-    }
+//    if ((nSteps     = MFVarGetInt   (_MDInAvgNStepsID,       itemID,   0)) <= 2) {
+//        return;
+//    }
 
     if ((maxhydropcap = MFVarGetFloat(_MDInMaxHydroCapID,  itemID, 0.0)) > 0.0) {
         resCapacity   = MFVarGetFloat(_MDInResCapacityID,  itemID, 0.0);
         resrelease    = MFVarGetFloat(_MDInResReleaseID,   itemID, 0.0);
         resstorage    = MFVarGetFloat(_MDInResStorageID,   itemID, 0.0);
-        resmaxH       = MFVarGetFloat(_MDInResMaxHeightID, itemID, 0.0);
+        resmaxH       = 1.25*MFVarGetFloat(_MDInResMaxHeightID, itemID, 0.0); // Consider 25% overhead
 
 //////////////////////////////////////////////////////////////////////
 //////////Reservoir as a paraboloid////////////////////////////    
@@ -60,6 +60,7 @@ static void _MDHydroPower (int itemID) {
        
         float R; 
         float tga;
+        resstorage=resstorage+0.25*resCapacity; //Adding back dead capacity for head calculation
         R=sqrt(3*resCapacity/(3.14*resmaxH));
         tga=R/resmaxH;
         resH=pow((3*resstorage/(3.14*pow(tga,2))),1/3);

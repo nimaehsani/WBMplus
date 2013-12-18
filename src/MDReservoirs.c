@@ -229,7 +229,7 @@ static void _MDReservoirNeuralNet(int itemID) {
                        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
         return;
     } 
-        resCapacity   = MFVarGetFloat(_MDInResCapacityID, itemID, 0.0);
+        resCapacity   = 0.75*MFVarGetFloat(_MDInResCapacityID, itemID, 0.0); //Assuming 25% dead storage; Should add 0.25*MaxCap to final result while presenting
         discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 0);
         discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0);
         
@@ -265,12 +265,12 @@ static void _MDReservoirNeuralNet(int itemID) {
             }
             }
         
-        release_max = discharge_max;
-        release_min = discharge_min;
-/*        release_max = MFVarGetFloat(_MDOutReleaseMaxID,       itemID, 0);
-        release_min = MFVarGetFloat(_MDOutReleaseMinID,       itemID, 0.0);
+//        release_max = discharge_max;
+//        release_min = discharge_min;
+        release_max = MFVarGetFloat(_MDOutReleaseMaxID,       itemID, discharge_min*2);
+        release_min = MFVarGetFloat(_MDOutReleaseMinID,       itemID, discharge_min);
         
-        if (nSteps <2){
+/*        if (nSteps <2){
             release_max = 5*discharge/3;
             release_min = discharge/3;
         }
@@ -313,7 +313,7 @@ static void _MDReservoirNeuralNet(int itemID) {
         I2[0][0] = SR_t_3;
         I2[1][0] = SR_t_2;
         
-        if (m==1){
+/*        if (m==1){
           I3 = 0.1;  
         }
        if (m==2){
@@ -349,6 +349,9 @@ static void _MDReservoirNeuralNet(int itemID) {
         if (m==12){
           I3 = 0.1;  
         }
+ */
+        I3 = m;
+ 
 
         ANN = ANNOUTPUT (I1, I2, I3)* (release_max - release_min) + release_min;
 
@@ -406,15 +409,23 @@ static void _MDReservoirNeuralNet(int itemID) {
             }
             }
         }
- */           
-        balance=(discharge-resRelease)-(resStorage-prevResStorage)/(3600*24);
+ */        
+        
+        if (resRelease > release_max) {
+                release_max = resRelease;
+            } else {
+            if (resRelease < release_min) {
+                release_min = resRelease;
+            }
+            }
+/*        balance=(discharge-resRelease)-(resStorage-prevResStorage)/(3600*24);
         if (balance!=0){
         //if (balance>=0.01 && balance<= -0.01 && nSteps>2){
                 printf("Error: Balance!    %f\n", balance);
                 printf("ANN=%f SIMOUT=%f release_max=%f release_min=%f prevResStorage=%f resCapacity=%f resStorageChg=%f minresStorage=%f discharge=%f resRelease=%f resStorage=%f\n", ANN, SIMOUT, release_max, release_min, prevResStorage, resCapacity, resStorageChg, minresStorage, discharge, resRelease, resStorage);
                 
         }
-
+*/
         res_release_t_1 = resRelease;
         MFVarSetFloat(_MDOutDischMaxID,         itemID, discharge_max);
         MFVarSetFloat(_MDOutDischMinID,         itemID, discharge_min);
