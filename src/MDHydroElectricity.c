@@ -60,7 +60,7 @@ static void _MDHydroPower (int itemID) {
        
         float R; 
         float tga;
-        resstorage=resstorage+0.25*resCapacity; //Adding back dead capacity for head calculation
+        resstorage=resstorage+0.3*resCapacity; //Adding back dead capacity for head calculation
         R=sqrt(3*resCapacity/(3.14*resmaxH));
         tga=R/resmaxH;
         resH=pow((3*resstorage/(3.14*pow(tga,2))),1/3);
