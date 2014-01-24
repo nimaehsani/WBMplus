@@ -252,6 +252,7 @@ extern "C" {
 #define MDVarMaxHydroCap                       "MaxHydroGenerationCapacity"  
 #define MDVarMegaWatt                       "MegaWatt" 
 #define MDVarHydroPower                     "HydroPower" 
+#define MDVarResH                       "ReservoirWaterLevel"    
     
     
 #define MDVarRelHumidity                     "RelativeHumidity"

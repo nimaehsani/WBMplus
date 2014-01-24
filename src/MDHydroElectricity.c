@@ -25,6 +25,7 @@ static int _MDInResReleaseID   = MFUnset;
 static int _MDInAvgNStepsID    = MFUnset;
 // Output
 static int _MDOutMegaWattID = MFUnset;
+static int _MDOutResHID = MFUnset;
 
 static void _MDHydroPower (int itemID) {
     float resstorage; // Reservoir storage [m3]
@@ -78,6 +79,7 @@ static void _MDHydroPower (int itemID) {
             hydrogen = maxhydropcap;
         }
         MFVarSetFloat(_MDOutMegaWattID, itemID, hydrogen);
+        MFVarSetFloat(_MDOutResHID, itemID, resH);
     }
     else {
         MFVarSetFloat(_MDOutMegaWattID, itemID, 0.0);
@@ -107,6 +109,7 @@ int MDHydroPowerDef() {
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDOutMegaWattID      = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFInitial))  == CMfailed) ||
+                    ((_MDOutResHID          = MFVarGetID(MDVarResH,                         "m",    MFOutput, MFState,  MFInitial))  == CMfailed) ||
                     ((MFModelAddFunction(_MDHydroPower) == CMfailed))
                     ) return (CMfailed);
 			break;
