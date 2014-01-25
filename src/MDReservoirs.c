@@ -185,6 +185,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     
     int   m             = MFDateGetCurrentMonth();
     int   d             = MFDateGetCurrentDay();
+    int   y             = MFDateGetCurrentYear();
     int   lastmonth;
     float discharge;      // Current discharge [m3/s]
     float resCapacity;    // Reservoir capacity [m3]
@@ -223,7 +224,7 @@ static void _MDReservoirNeuralNet(int itemID) {
     discharge = MFVarGetFloat(_MDInDischargeID,   itemID, 0.0);
     nSteps    = MFVarGetInt  (_MDInAvgNStepsID,   itemID,   0);
    
-    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  nSteps<366 ){
+    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  y<1900 ){
                        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
                        MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
                        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
