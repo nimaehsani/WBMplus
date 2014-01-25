@@ -13,7 +13,7 @@ Updated with a Neural Network function for
 Reservoir Operation.
 2013 NE
  *******************************************************************************/
-
+#include <stdio.h>
 #include <cm.h>
 #include <MF.h>
 #include <MD.h>
@@ -41,7 +41,7 @@ static int _MDOutReleaseMaxID        = MFUnset; // ...
 static int _MDOutLastMonthID         = MFUnset;
 static int _MDOutMonthToDayInFlowID  = MFUnset;
 static int _MDOutMonthToDayReleaseID = MFUnset;
-static int _MDInAvgNStepsID          = MFUnset;
+//static int _MDInAvgNStepsID          = MFUnset;
 
 static float ANNOUTPUT(float I1[3][1], float I2[2][1], float I3) {
 
@@ -218,11 +218,11 @@ static void _MDReservoirNeuralNet(int itemID) {
     float SD_t_1;
     float SR_t_3;
     float SR_t_2;
-    int   nSteps;
+   // int   nSteps;
     float balance;
 
     discharge = MFVarGetFloat(_MDInDischargeID,   itemID, 0.0);
-    nSteps    = MFVarGetInt  (_MDInAvgNStepsID,   itemID,   0);
+    //nSteps    = MFVarGetInt  (_MDInAvgNStepsID,   itemID,   0);
    
     if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  y<1900 ){
                        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
@@ -528,7 +528,7 @@ int MDReservoirDef() {
             break;
         case MDneuralnet:
 
-            if (    ((_MDInAvgNStepsID          = MDAvgNStepsDef ())  == CMfailed) ||
+            if (    //((_MDInAvgNStepsID          = MDAvgNStepsDef ())  == CMfailed) ||
                     ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
                     ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||

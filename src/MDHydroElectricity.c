@@ -10,7 +10,7 @@ nehsani00@ccny.cuny.edu
 
  *******************************************************************************/
 
-
+#include <stdio.h>
 #include <cm.h>
 #include <MF.h>
 #include <MD.h>
@@ -22,7 +22,7 @@ static int _MDInResStorageID   = MFUnset;
 static int _MDInResMaxHeightID = MFUnset;
 static int _MDInMaxHydroCapID  = MFUnset;
 static int _MDInResReleaseID   = MFUnset;
-static int _MDInAvgNStepsID    = MFUnset;
+//static int _MDInAvgNStepsID    = MFUnset;
 // Output
 static int _MDOutMegaWattID    = MFUnset;
 static int _MDOutResHID        = MFUnset;
@@ -35,7 +35,7 @@ static void _MDHydroPower (int itemID) {
     float resH;
     float maxhydropcap;
     float hydrogen;
-    int nSteps;
+    //int nSteps;
     int   y             = MFDateGetCurrentYear();
     
 //    if ((nSteps     = MFVarGetInt   (_MDInAvgNStepsID,       itemID,   0)) <= 2) {
@@ -59,27 +59,29 @@ static void _MDHydroPower (int itemID) {
 /////////////////////////////////////////////
 //////Reservoir As a Cone///////////////////
 ////////////////////////////////////////////  
-       
+  /*     
         float R; 
         float tga;
         resstorage=resstorage+0.3*resCapacity; //Adding back dead capacity for head calculation
         R=sqrt(3*resCapacity/(3.14*resmaxH));
         tga=R/resmaxH;
         resH=pow((3*resstorage/(3.14*pow(tga,2))),1/3);
-///////////////////////////////////////////////
-//////////////////////////////////////////////////
-/*        float delta;
-        delta=(resCapacity-resstorage)/resCapacity;
-        resH=0.2*delta*resmaxH;
-      
 *///////////////////////////////////////////////
+//////////////////////////////////////////////////
+        float delta;
+        delta = resstorage+0.3*resCapacity;
+        //resH = resmaxH*delta/resCapacity;
+        resH = resmaxH*sqrt(delta/resCapacity);
+        
+      
+//////////////////////////////////////////////
 ////////////////////////////////////////////////
             
             hydrogen =  9810 * resH * resrelease / 1000000; // Power Generation in MEga Watt
         if (hydrogen > maxhydropcap) {
             hydrogen = maxhydropcap;
         }
-        printf("%f %f %f %f %f %f %f %f\n", resstorage, resCapacity,R,tga, resH, resrelease,hydrogen, maxhydropcap);  
+        printf("%f %f %f %f %f %f %f\n", resstorage, resCapacity, resmaxH,  resH, resrelease,  hydrogen, maxhydropcap); 
         MFVarSetFloat(_MDOutMegaWattID, itemID, hydrogen);
         MFVarSetFloat(_MDOutResHID, itemID, resH);
     }
@@ -104,7 +106,7 @@ int MDHydroPowerDef() {
     switch (optID) {
         case MDcalculate:
             if (    //(                         MDWaterBalanceDef() == CMfailed) ||
-                    ((_MDInAvgNStepsID      = MDAvgNStepsDef() )  == CMfailed) ||
+                    //((_MDInAvgNStepsID      = MDAvgNStepsDef() )  == CMfailed) ||
                     ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
                     ((_MDInMaxHydroCapID    = MFVarGetID(MDVarMaxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
