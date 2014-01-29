@@ -46,7 +46,7 @@ static void _MDHydroPower (int itemID) {
         resCapacity   = MFVarGetFloat(_MDInResCapacityID,  itemID, 0.0);
         resrelease    = MFVarGetFloat(_MDInResReleaseID,   itemID, 0.0);
         resstorage    = MFVarGetFloat(_MDInResStorageID,   itemID, 0.0);
-        resmaxH       = 1.25*MFVarGetFloat(_MDInResMaxHeightID, itemID, 0.0); // Consider 25% overhead
+        resmaxH       = MFVarGetFloat(_MDInResMaxHeightID, itemID, 0.0); // Consider 25% overhead
 
 //////////////////////////////////////////////////////////////////////
 //////////Reservoir as a paraboloid////////////////////////////    
@@ -81,7 +81,7 @@ static void _MDHydroPower (int itemID) {
         if (hydrogen > maxhydropcap) {
             hydrogen = maxhydropcap;
         }
-        printf("%f %f %f %f %f %f %f\n", resstorage, resCapacity, resmaxH,  resH, resrelease,  hydrogen, maxhydropcap); 
+//        printf("%f %f %f %f %f %f %f\n", resstorage, resCapacity, resmaxH,  resH, resrelease,  hydrogen, maxhydropcap); 
         MFVarSetFloat(_MDOutMegaWattID, itemID, hydrogen);
         MFVarSetFloat(_MDOutResHID, itemID, resH);
     }
@@ -107,13 +107,15 @@ int MDHydroPowerDef() {
         case MDcalculate:
             if (    //(                         MDWaterBalanceDef() == CMfailed) ||
                     //((_MDInAvgNStepsID      = MDAvgNStepsDef() )  == CMfailed) ||
-                    ((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
-                    ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
+                    //((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
+                    //((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
+                    ((_MDInResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFInput, MFState, MFBoundary)) == CMfailed) ||
+                    ((_MDInResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFInput, MFState, MFBoundary)) == CMfailed) ||
                     ((_MDInMaxHydroCapID    = MFVarGetID(MDVarMaxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
-                    ((_MDOutMegaWattID      = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFInitial))  == CMfailed) ||
-                    ((_MDOutResHID          = MFVarGetID(MDVarResH,                         "m",    MFOutput, MFState,  MFInitial))  == CMfailed) ||
+                    ((_MDOutMegaWattID      = MFVarGetID(MDVarMegaWatt,                     "MW",   MFOutput, MFState,  MFBoundary))  == CMfailed) ||
+                    ((_MDOutResHID          = MFVarGetID(MDVarResH,                         "m",    MFOutput, MFState,  MFBoundary))  == CMfailed) ||
                     ((MFModelAddFunction(_MDHydroPower) == CMfailed))
                     ) return (CMfailed);
 			break;
@@ -122,4 +124,3 @@ int MDHydroPowerDef() {
     MFDefLeaving("HydroElectricity");
     return (_MDOutMegaWattID);
 }
-

@@ -402,7 +402,22 @@ static void _MDReservoirNeuralNet(int itemID) {
         }
         MFVarSetFloat(_MDOutMonthToDayReleaseID, itemID, mtdRelease);
 
-        resRelease = SIMOUT;
+        
+        ///////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////
+        if (SIMOUT > (resCapacity/(3.21*24*3600))){
+            resRelease=(resCapacity/(3.21*24*3600));
+            resStorage = prevResStorage + (discharge * 3600 * 24)-(resRelease * 3600 * 24);
+            if (resStorage > resCapacity) {
+                resRelease = ((discharge * 3600 * 24)-(resCapacity - prevResStorage)) / (3600 * 24);
+                resStorage = resCapacity;
+            }
+                
+        } else {
+            resRelease = SIMOUT;
+        }
+////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////// 
 
 /*        if (nSteps <2){
             release_max = 5*discharge/3;
@@ -531,22 +546,22 @@ int MDReservoirDef() {
             if (    //((_MDInAvgNStepsID          = MDAvgNStepsDef ())  == CMfailed) ||
                     ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
                     ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutDisch_t_3_ID        = MFVarGetID(MDVarDisch_t_3_,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutDischMinID          = MFVarGetID(MDVarDischMin,               "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutDischMaxID          = MFVarGetID(MDVarDischMax,               "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutReleaseMinID        = MFVarGetID(MDVarReleaseMin,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutReleaseMaxID        = MFVarGetID(MDVarReleaseMax,             "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutLastMonthID         = MFVarGetID(MDVarLastMonth,              "m"   , MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutMonthToDayInFlowID  = MFVarGetID(MDVarMonthToDayInFlow,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
+                    ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutDisch_t_3_ID        = MFVarGetID(MDVarDisch_t_3_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutDischMinID          = MFVarGetID(MDVarDischMin,               "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutDischMaxID          = MFVarGetID(MDVarDischMax,               "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutReleaseMinID        = MFVarGetID(MDVarReleaseMin,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutReleaseMaxID        = MFVarGetID(MDVarReleaseMax,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutLastMonthID         = MFVarGetID(MDVarLastMonth,              "m"   , MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutMonthToDayInFlowID  = MFVarGetID(MDVarMonthToDayInFlow,       "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFBoundary)) == CMfailed) || 
                     ((_MDOutResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutResRelease_t_2_ID   = MFVarGetID(MDVarResRelease_t_2_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
-                    ((_MDOutResRelease_t_3_ID   = MFVarGetID(MDVarResRelease_t_3_,        "m3/s", MFOutput, MFState, MFBoundary)) == CMfailed) ||
+                    ((_MDOutResRelease_t_1_ID   = MFVarGetID(MDVarResRelease_t_1_,        "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutResRelease_t_2_ID   = MFVarGetID(MDVarResRelease_t_2_,        "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
+                    ((_MDOutResRelease_t_3_ID   = MFVarGetID(MDVarResRelease_t_3_,        "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
 				(                 MDHydroPowerDef()   == CMfailed) ||
                     (MFModelAddFunction(_MDReservoirNeuralNet) == CMfailed)) return (CMfailed);
               break;
