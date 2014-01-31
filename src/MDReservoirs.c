@@ -23,10 +23,10 @@ Reservoir Operation.
 static int _MDInDischargeID          = MFUnset;
 static int _MDInDischMeanID          = MFUnset;
 static int _MDInResCapacityID        = MFUnset;
-
+static int _MDInAvgNStepsID          = MFUnset;
 // Output
 static int _MDOutResStorageID        = MFUnset;
-static int _MDOutPreResStorageID        = MFUnset;
+static int _MDOutPreResStorageID     = MFUnset;
 static int _MDOutResStorageChgID     = MFUnset;
 static int _MDOutResReleaseID        = MFUnset;
 static int _MDOutResRelease_t_1_ID   = MFUnset;
@@ -211,10 +211,12 @@ static void _MDReservoirNeuralNet(int itemID) {
     float SD_t_1;
     float SR_t_3;
     float SR_t_2;
-
+        int nSteps;
+    
+    nSteps     = MFVarGetInt   (_MDInAvgNStepsID,       itemID,   0);
     discharge = MFVarGetFloat(_MDInDischargeID,   itemID, 0.0);
    
-    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  y<1900 ){
+    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  nSteps<10 ){
                        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
                        MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
                        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
@@ -496,7 +498,8 @@ int MDReservoirDef() {
             break;
         case MDneuralnet:
 
-            if (    ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
+            if (    ((_MDInAvgNStepsID          = MDAvgNStepsDef ())  == CMfailed) ||
+                    ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
                     ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
