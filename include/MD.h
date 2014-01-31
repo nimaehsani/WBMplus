@@ -221,6 +221,7 @@ extern "C" {
 #define MDVarReservoirStorageChange             "ReservoirStorageCahnge"
 #define MDVarReservoirCapacity                  "ReservoirCapacity"
 #define MDVarReservoirStorage                   "ReservoirStorage"
+#define MDVarPreResStorage                   "PreviousReservoirStorage"
 //#define MDVarDischMean                       "MeanDischarge"
 #define MDVarResCapacity                     "ResrvoirCapacity"
 //#define MDVarDischMTD                        "TotalMonthlyDischargeUpTothatDate"
