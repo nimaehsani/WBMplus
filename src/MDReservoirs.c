@@ -23,10 +23,10 @@ Reservoir Operation.
 static int _MDInDischargeID          = MFUnset;
 static int _MDInDischMeanID          = MFUnset;
 static int _MDInResCapacityID        = MFUnset;
-static int _MDInAvgNStepsID          = MFUnset;
+
 // Output
 static int _MDOutResStorageID        = MFUnset;
-static int _MDOutPreResStorageID     = MFUnset;
+static int _MDOutPreResStorageID        = MFUnset;
 static int _MDOutResStorageChgID     = MFUnset;
 static int _MDOutResReleaseID        = MFUnset;
 static int _MDOutResRelease_t_1_ID   = MFUnset;
@@ -211,12 +211,10 @@ static void _MDReservoirNeuralNet(int itemID) {
     float SD_t_1;
     float SR_t_3;
     float SR_t_2;
-        int nSteps;
-    
-    nSteps     = MFVarGetInt   (_MDInAvgNStepsID,       itemID,   0);
+
     discharge = MFVarGetFloat(_MDInDischargeID,   itemID, 0.0);
    
-    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  nSteps<10 ){
+    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  y<1900 ){
                        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
                        MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
                        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
@@ -291,42 +289,9 @@ static void _MDReservoirNeuralNet(int itemID) {
         I2[0][0] = SR_t_3;
         I2[1][0] = SR_t_2;
         
-       if (m==1){
-          I3 = 0.1;  
-        }
-       if (m==2){
-          I3 = 0.2;  
-        }
-        if (m==3){
-          I3 = 0.3;  
-        }
-        if (m==4){
-          I3 = 0.4;  
-        }
-        if (m==5){
-          I3 = 0.5;  
-        }
-        if (m==6){
-          I3 = 0.6;  
-        }
-        if (m==7){
-          I3 = 0.6;  
-        }
-        if (m==8){
-          I3 = 0.5;  
-        }
-        if (m==9){
-          I3 = 0.4;  
-        }
-        if (m==10){
-          I3 = 0.3;  
-        }
-        if (m==11){
-          I3 = 0.2;  
-        }
-        if (m==12){
-          I3 = 0.1;  
-        }
+
+          I3 = m;  
+
  
         ANN = ANNOUTPUT (I1, I2, I3)* (release_max - release_min) + release_min;
 
@@ -498,8 +463,7 @@ int MDReservoirDef() {
             break;
         case MDneuralnet:
 
-            if (    ((_MDInAvgNStepsID          = MDAvgNStepsDef ())  == CMfailed) ||
-                    ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
+            if (    ((_MDInDischargeID          = MDDischLevel2Def()) == CMfailed) ||
                     ((_MDInResCapacityID        = MFVarGetID(MDVarReservoirCapacity,      "m3",   MFInput,  MFState, MFBoundary)) == CMfailed) ||
                     ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||

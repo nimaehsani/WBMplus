@@ -22,7 +22,6 @@ static int _MDInResStorageID   = MFUnset;
 static int _MDInResMaxHeightID = MFUnset;
 static int _MDInMaxHydroCapID  = MFUnset;
 static int _MDInResReleaseID   = MFUnset;
-static int _MDInAvgNStepsID    = MFUnset;
 // Output
 static int _MDOutMegaWattID    = MFUnset;
 static int _MDOutResHID        = MFUnset;
@@ -36,10 +35,8 @@ static void _MDHydroPower (int itemID) {
     float maxhydropcap;
     float hydrogen;
     int   y             = MFDateGetCurrentYear();
-    int nSteps;
-    
-    nSteps     = MFVarGetInt   (_MDInAvgNStepsID,       itemID,   0);
-    if (((maxhydropcap = MFVarGetFloat(_MDInMaxHydroCapID,  itemID, 0.0)) > 0.0 &&  nSteps>10 )) {
+
+    if (((maxhydropcap = MFVarGetFloat(_MDInMaxHydroCapID,  itemID, 0.0)) > 0.0 &&  y>1900 )) {
         resCapacity   = MFVarGetFloat(_MDInResCapacityID,  itemID, 0.0);
         resrelease    = MFVarGetFloat(_MDInResReleaseID,   itemID, 0.0);
         resstorage    = MFVarGetFloat(_MDInResStorageID,   itemID, 0.0);
@@ -106,9 +103,13 @@ int MDHydroPowerDef() {
     
     switch (optID) {
         case MDcalculate:
-            if (    ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
-                    ((_MDInAvgNStepsID      = MDAvgNStepsDef ())  == CMfailed) ||
-                    ((_MDInResStorageID     = MFVarGetID(MDVarReservoirStorage,             "m3"  , MFInput,  MFState,  MFInitial))  == CMfailed) ||
+            if (    //(                         MDWaterBalanceDef() == CMfailed) ||
+                    //((_MDInAvgNStepsID      = MDAvgNStepsDef() )  == CMfailed) ||
+                    //((_MDInResStorageID     = MDReservoirDef() )  == CMfailed) ||
+                    ((_MDInResReleaseID     = MDReservoirDef() )  == CMfailed) ||
+                    //(MDReservoirDef()   == CMfailed) ||
+                    ((_MDInResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFInput, MFState, MFInitial)) == CMfailed) ||
+                    //((_MDInResReleaseID        = MFVarGetID(MDVarReservoirRelease,       "m3/s", MFInput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDInMaxHydroCapID    = MFVarGetID(MDVarMaxHydroCap,                  "MW",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResMaxHeightID   = MFVarGetID(MDVarResMaxHeight,                 "m",    MFInput,  MFState,  MFBoundary)) == CMfailed) ||
                     ((_MDInResCapacityID    = MFVarGetID(MDVarReservoirCapacity,            "m3",   MFInput,  MFState,  MFBoundary)) == CMfailed) ||
