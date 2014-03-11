@@ -35,8 +35,9 @@ static void _MDHydroPower (int itemID) {
     float maxhydropcap;
     float hydrogen;
     int   y             = MFDateGetCurrentYear();
-
-    if (((maxhydropcap = MFVarGetFloat(_MDInMaxHydroCapID,  itemID, 0.0)) > 0.0 &&  y>1900 )) {
+    
+        resrelease    = MFVarGetFloat(_MDInResReleaseID,   itemID, 0.0);
+    if (((maxhydropcap = MFVarGetFloat(_MDInMaxHydroCapID,  itemID, 0.0)) > 0.0 &&  y>1900)) {
         resCapacity   = MFVarGetFloat(_MDInResCapacityID,  itemID, 0.0);
         resrelease    = MFVarGetFloat(_MDInResReleaseID,   itemID, 0.0);
         resstorage    = MFVarGetFloat(_MDInResStorageID,   itemID, 0.0);
@@ -63,7 +64,7 @@ static void _MDHydroPower (int itemID) {
 *///////////////////////////////////////////////
 //////////////////////////////////////////////////
         float delta;
-        delta = resstorage+0.3*resCapacity;
+        delta = resstorage+0.1*resCapacity;
         //resH = resmaxH*delta/resCapacity;
         resH = resmaxH*sqrt(delta/resCapacity);
         

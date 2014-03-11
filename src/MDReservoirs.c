@@ -35,99 +35,95 @@ static int _MDOutResRelease_t_3_ID   = MFUnset;
 static int _MDOutDisch_t_1_ID        = MFUnset;
 static int _MDOutDisch_t_2_ID        = MFUnset;
 static int _MDOutDisch_t_3_ID        = MFUnset;
-static int _MDOutDischMinID          = MFUnset; // 
-static int _MDOutDischMaxID          = MFUnset; // ...
-static int _MDOutReleaseMinID        = MFUnset; // ...
-static int _MDOutReleaseMaxID        = MFUnset; // ...
-static int _MDOutLastMonthID         = MFUnset;
-static int _MDOutMonthToDayInFlowID  = MFUnset;
-static int _MDOutMonthToDayReleaseID = MFUnset;
+
 
 static float ANNOUTPUT(float I1[3][1], float I2[2][1], float I3) {
 
     float FirstLayerBias[6][1] = {
-        {-1.8349638599010885},
-        {0.31681519142609904},
-        {0.90820782843797254},
-        {0.24315763055718279},
-        {0.22750233763000977},
-        {-5.9638615037974105},
+        {2.5050069210611214},
+        {0.56324962846021676},
+        {2.9934573505209836},
+        {-0.32326573637600164},
+        {4.6033876322491265},
+        {1.2269056039304829},
+
     };
 
     float FirstLayerWeight [6][3] = {
-        {0.334525270188955, 2.32729460498139, -1.08218040335814},
-        {-0.132942683641029, -2.07435066955086, -7.71723103154886},
-        {-0.961228914800186, -1.59451723505862, 7.64275651580055},
-        {-0.138149619471609, -0.369268995299719, -1.05878021476956},
-        {-0.830754365521219, -1.14297810944283, -0.591263860604682},
-        {-2.35234764862494, -0.170592638429000, 6.45623554696750},
+        {-2.8105005056468633,-1.0077666925314335,4.1021996487606796},
+        {-1.1210513651438023,1.185386728843735,5.4851321695520836},
+        {-2.8216586095746585,1.8748037193174842,-3.7739108983940559},
+        {-2.3684374806144071,3.2075926659486464,3.3303063067244341},
+        {0.093124111828116238,-1.35181399260482,-4.9053598052877607},
+        {4.4406543872673385,2.7075640683000683,0.4366000483306508},
     };
 
     float SecondLayerWeight[4][2] = {
-        {-0.461376663064363, -2.29680500565283},
-        {1.14189579706809, 3.60122216280990},
-        {5.13965726884100, -8.54024357801218},
-        {0.797602695519510, 9.04132111622455},
+        {1.5389008605237542,5.3844216437162515},
+        {0.79857647496162087,-9.4352753275067478},
+        {-1.7449580935377649,-5.3580107251214919},
+        {4.3899329977858814,9.4021829034453575},   
     };
 
     float SecondLayerBias [4][1] = {
-        {1.7667185407719592},
-        {-0.44451918724448725},
-        {0.27782065349273022},
-        {0.95132682701557358},
+        {-6.2614696535343883},
+        {-0.019643179146663855},
+        {2.2987927416795513},
+        {0.19030960925498394},
     };
 
     float ThirdLayerWeight[2][1] = {
-        {-3.80846357210734},
-        {6.09704986254896},
+        {-5.848781527524336},
+        {-5.6209710811412403},
     };
 
     float ThirdLayerBias [2][1] = {
-        {1.9804896408537742},
-        {-1.4736095994793379},
+        {4.994739278766394},
+        {-0.68349310166014743},
     };
 
     float FourthLayerWeight1[6][6] = {
-        {-0.682425987793126, 2.20351531749950, 1.39097166906628, -2.39124203637190, 2.27986610311803, -0.633039777101503},
-        {-0.478344057060439, 2.22542158997640, 1.32425417280671, -2.91086448864336, 2.55366825518159, 0.915264601641264},
-        {-0.330288477684471, 0.636650781140816, -0.267485765559433, -0.0845957816699171, -0.0311750961112513, 0.519857878801029},
-        {0.871647922418761, -0.0363653064870689, -1.23489938556299, 3.48735527686833, -4.09204564273278, -1.29124333772506},
-        {-1.14578627733860, 0.362029723412182, -1.49653052173892, -2.14316546336101, 2.53719571843746, 1.03545166271711},
-        {-3.93424835569323, -0.140516448398705, -0.287183959118834, 2.81056586729428, -1.13796052928068, -1.61032679050170},
-    };
+        {0.44877903382792333, -0.18254257814405594, -0.5473500863373173, -0.5169833821838733, -0.51032491282695858, -0.16942474507699373},
+        {-0.18790036759284953, -0.26304777707464544,-0.33261319704729081,1.1576434730697813,-1.2867431339504793,-0.077830787536354085},
+        {0.3364691773905607,-0.23529779106560525,0.23479515988057528,-0.52679632405952947,-0.32193897061867188,0.99983912186290358},
+        {-0.1109396666084288,0.12589761050901063,0.39768166255874171,-0.95504719167885643,-0.48378034629670724,-0.1460218192386665},
+        {-0.56781929331280412,-0.1340982754278453,-0.27227312962879308,0.65829463376767638,-0.60128020573007512,-0.20450478250200113},
+        {-0.33539837834969327,2.3587877179318752,-0.18965700642344413,0.53897717785022026,-0.010261133397695224,2.0066601309892187},
+      };
 
     float FourthLayerWeight2[6][4] = {
-        {1.73940117579596, 4.31257163704923, 2.00908995797761, 0.542330032098119},
-        {1.82716477758809, 3.90502202733331, 1.71260564791546, 0.673923447124240},
-        {-0.297770956962901, 0.353599592055875, -0.0335628624334481, 1.90359407919045},
-        {0.211761429085206, -1.37612121135069, -0.303662471752540, 1.13329378872693},
-        {-0.299078423419769, 0.649961868699184, 0.173313681427546, 0.573538752543163},
-        {-3.38710042074078, 1.16448748228937, -0.0607349889977066, -2.01182147710900},
+        {0.85322762061547153,0.38151487077552471,0.013375224604868622,0.47030099532818342},
+        {0.12484465422561394,0.032015171088060207,-0.9782598080355368,1.1911283432788269},
+        {0.86672236918271872,-7.537237294147964,-0.66984774984780726,8.3340732800770603},
+        {0.018358440088093841,-1.8631112090166739,-0.41297818840840744,0.98408622321802774},
+        {0.58962219530808313,-0.6998245214671831,-0.27655082884087873,0.59878151983249128},
+        {0.335063480868177,0.51247635784616929,0.11022166259630234,-2.2748227165955215},   
     };
 
     float FourthLayerWeight3[6][2] = {
-        {-1.84202629698469, -0.877541434013040},
-        {-1.96090394140442, -0.946074755836152},
-        {0.0173356328650234, -0.00969615110828418},
-        {-0.0839568134797032, -0.129727081135696},
-        {0.0356547772242401, 0.0691169740242024},
-        {0.330775400271462, 0.0723975371228814},
+        {-0.023965705562068458,-0.25539237922783004},
+        {0.53012265293183103,0.036057538999157722},
+        {0.01683904990344131,-0.16364599191398779},
+        {0.079757626110007598,-0.26961832779387657},
+        {0.12382350890396553,0.17415719333320617},
+        {-0.19597829571397554,0.58209152411680332},
+
     };
 
     float FourthLayerBias[6][1] = {
-        {0.0051805882973190165},
-        {1.7022493850334097},
-        {-1.493864901771131},
-        {-0.49352259943031906},
-        {0.78319807803209185},
-        {-0.86188699136698088},
-    };
+        {-1.8339298975128442},
+        {-1.5816808464939591},
+        {-0.77466247684221412},
+        {-0.11298923019448159},
+        {-0.95466593701455416},
+        {-1.7755738768746663},
+};
 
     float FifthLayerWeight [1][6] = {
-        {-4.60687439047288, 4.68810658158703, 7.48854158670334, -2.67349645890795, -5.84593641782589, -1.13313370598710},
+        {1.6857476163957275,3.395168187570675,6.6872284910476232,3.6176310135802896,1.3334351611372237,3.8604197851257109},
     };
 
-    float FifthLayerBias = 0.22258525600927653;
+    float FifthLayerBias = -2.6538309721236089;
     // LAYER ONE 
     float FirstLayerOut [6][1];
     int i;
@@ -175,25 +171,14 @@ static float ANNOUTPUT(float I1[3][1], float I2[2][1], float I3) {
 }
  
 static void _MDReservoirNeuralNet(int itemID) {
-    
-    int   m             = MFDateGetCurrentMonth();
-    int   d             = MFDateGetCurrentDay();
-    int   y             = MFDateGetCurrentYear();
-    int   lastmonth;
+
     float discharge;      // Current discharge [m3/s]
     float resCapacity;    // Reservoir capacity [m3]
     float minresStorage;
     float discharge_t_1;
     float discharge_t_2;
     float discharge_t_3;
-    float discharge_min;
-    float discharge_max;
-    float release_min;
-    float release_max;
-    float mtdInflow;       // Total Monthly (Up to that Date) InFlow
-    float avmtdInflow;     // Average Monthly (Up to that Date) InFlow
-    float mtdRelease;      // Total Monthly (Up to that Date) Release
-    float avmtdRelease;    // Average Monthly (Up to that Date) Release
+
     float I1[3][1];        // Input to ANN (ANNOUTPUT.c) 
     float I2[2][1];        // Input to ANN (ANNOUTPUT.c) 
     float I3;              // Input to ANN (ANNOUTPUT.c) 
@@ -211,17 +196,18 @@ static void _MDReservoirNeuralNet(int itemID) {
     float SD_t_1;
     float SR_t_3;
     float SR_t_2;
+    int   y             = MFDateGetCurrentYear();
 
     discharge = MFVarGetFloat(_MDInDischargeID,   itemID, 0.0);
    
-    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  y<1900 ){
+    if (((resCapacity = MFVarGetFloat(_MDInResCapacityID,    itemID, 0.0)) <= 0.0) ||  y<=1900 ){
                        MFVarSetFloat(_MDOutResStorageID,    itemID, 0.0);
                        MFVarSetFloat(_MDOutResStorageChgID, itemID, 0.0);
                        MFVarSetFloat(_MDOutResReleaseID,    itemID, discharge);
         return;
     } 
-        resCapacity   = 0.70*MFVarGetFloat(_MDInResCapacityID, itemID, 0.0); //Assuming 30% dead storage; Should add 0.25*MaxCap to final result while presenting
-        
+        resCapacity   = 0.90*MFVarGetFloat(_MDInResCapacityID, itemID, 0.0); //Assuming 30% dead storage; Should add 0.25*MaxCap to final result while presenting
+        prevResStorage = MFVarGetFloat(_MDOutPreResStorageID, itemID, 0.03*resCapacity);
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -229,44 +215,7 @@ static void _MDReservoirNeuralNet(int itemID) {
  * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!      
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-        
-        discharge_max = MFVarGetFloat(_MDOutDischMaxID,   itemID, 0);
-        discharge_min = MFVarGetFloat(_MDOutDischMinID,   itemID, 0);
-   
-        if (discharge_max ==0){
-            if (discharge>0){
-                discharge_max=discharge;
-                discharge_min=discharge/2;
-            }else{
-                discharge_max=1;
-                discharge_min=1/2;
-            }
-        }
-        
-        if (discharge > discharge_max) {
-                discharge_max = discharge;
-            } else {
-            if (discharge < discharge_min) {
-                discharge_min = discharge;
-            }
-            }
-        
-//        release_max = discharge_min*2;
-//        release_min = discharge_min;
-        release_max = MFVarGetFloat(_MDOutReleaseMaxID,       itemID, discharge_min*2);
-        release_min = MFVarGetFloat(_MDOutReleaseMinID,       itemID, discharge_min);
-        
-        lastmonth   = MFVarGetFloat(_MDOutLastMonthID,        itemID, 0.0);
-        mtdInflow   = MFVarGetFloat(_MDOutMonthToDayInFlowID, itemID, 0.0);
 
-        if (lastmonth == m) {
-            mtdInflow   = mtdInflow + discharge;
-            avmtdInflow = mtdInflow / d;
-        } else {
-            mtdInflow =discharge;
-            avmtdInflow = discharge;
-        } 
-        MFVarSetFloat(_MDOutMonthToDayInFlowID, itemID, mtdInflow);
 
         discharge_t_1   = discharge;       
         discharge_t_2   = MFVarGetFloat(_MDOutDisch_t_2_ID,      itemID, 0); // Last Month
@@ -274,13 +223,12 @@ static void _MDReservoirNeuralNet(int itemID) {
         res_release_t_2 = MFVarGetFloat(_MDOutResRelease_t_2_ID, itemID, 0); // Last Month
         res_release_t_3 = MFVarGetFloat(_MDOutResRelease_t_3_ID, itemID, 0); // Two Month Ago
 
-        SD_t_1 = (discharge_t_1   - discharge_min) / (discharge_max - discharge_min);
+        SD_t_1 = discharge_t_1 *24*3600/resCapacity;
+        SD_t_2 = discharge_t_2 *24*3600/resCapacity;
+        SD_t_3 = discharge_t_3 *24*3600/resCapacity;
         
-        SD_t_2 = (discharge_t_2 - discharge_min) / (discharge_max - discharge_min);
-        SD_t_3 = (discharge_t_3 - discharge_min) / (discharge_max - discharge_min);
-        
-        SR_t_3 = (res_release_t_3 - release_min) / (release_max - release_min);
-        SR_t_2 = (res_release_t_2 - release_min) / (release_max - release_min);
+        SR_t_3 = res_release_t_3 *24*3600/resCapacity;
+        SR_t_2 = res_release_t_2 *24*3600/resCapacity;
         
         I1[0][0] = SD_t_3;
         I1[1][0] = SD_t_2;
@@ -290,45 +238,49 @@ static void _MDReservoirNeuralNet(int itemID) {
         I2[1][0] = SR_t_2;
         
 
-          I3 = m;  
+        I3 = prevResStorage/resCapacity;  
 
  
-        ANN = ANNOUTPUT (I1, I2, I3)* (release_max - release_min) + release_min;
+        ANN = ANNOUTPUT (I1, I2, I3)*resCapacity/(24*3600) ;
+        
 
-        prevResStorage = MFVarGetFloat(_MDOutPreResStorageID, itemID, 0);
+
+        
 
         resStorageChg = (discharge - ANN)*3600 * 24;
         minresStorage = 0;
+        
 
         if ((prevResStorage + resStorageChg <= resCapacity) && (prevResStorage + resStorageChg >= minresStorage)) {
             SIMOUT = ANN;
+             
             if (SIMOUT < 0) {
                 printf("Error: Negative release (1)! \n");
-                printf("%f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resCapacity, resStorageChg, minresStorage, discharge);
+                printf("%f %f %f %f %f \n", SIMOUT, resCapacity, resStorageChg, minresStorage, discharge);
             } 
             resStorage = prevResStorage + resStorageChg;
         } else {
             if ((prevResStorage + resStorageChg) > resCapacity) {
                 SIMOUT = ((discharge * 3600 * 24)-(resCapacity - prevResStorage)) / (3600 * 24);
+                
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (2)! \n");
-                    printf("%f %f %f %f %f %f %f\n", SIMOUT, release_max, release_min, resCapacity, resStorageChg, minresStorage, discharge);
-                }
+                        printf("%f %f %f %f %f \n", SIMOUT, resCapacity, resStorageChg, minresStorage, discharge);                }
                 resStorage = resCapacity;
             } else {
                 SIMOUT = (prevResStorage - minresStorage + (discharge * 3600 * 24)) / (3600 * 24);
+               
                 if (SIMOUT < 0) {
                     printf("Error: Negative release (3)! \n");
-                    printf("%f %f %f %f %f %f %f %f %f\n", ANN, SIMOUT, release_max, release_min, prevResStorage, resCapacity, resStorageChg, minresStorage, discharge);
-                }
+                        printf("%f %f %f %f %f \n", SIMOUT, resCapacity, resStorageChg, minresStorage, discharge);                }
                 resStorage = minresStorage;
             }
         }
-
+                //  printf("%f %f %f %f %f  %f %f\n",SIMOUT, ANN, discharge, resCapacity, resStorageChg, minresStorage, resStorage); 
      
 ///////////////////////////////////////////////////////////////////
 /////////////////// Maximum Discharge ///////////////////////
-        if (SIMOUT > (resCapacity/(3.21*24*3600))){
+/*        if (SIMOUT > (resCapacity/(3.21*24*3600))){
             resRelease=(resCapacity/(3.21*24*3600));
             resStorage = prevResStorage + (discharge * 3600 * 24)-(resRelease * 3600 * 24);
             if (resStorage > resCapacity) {
@@ -339,33 +291,15 @@ static void _MDReservoirNeuralNet(int itemID) {
         } else {
             resRelease = SIMOUT;
         }
+ */
 ////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////// 
-        mtdRelease = MFVarGetFloat(_MDOutMonthToDayReleaseID, itemID, 0.0);
-        if (lastmonth == m) {
-            mtdRelease   = mtdRelease + SIMOUT;
-            avmtdRelease = mtdRelease / d;
-        } else {
-            mtdRelease   = SIMOUT;
-            avmtdRelease = SIMOUT;
-        }
-        MFVarSetFloat(_MDOutMonthToDayReleaseID, itemID, mtdRelease);
 
-      
-        if (resRelease > release_max) {
-                release_max = resRelease;
-            } else {
-            if (resRelease < release_min) {
-                release_min = resRelease;
-            }
-            }
+                      resRelease = SIMOUT;
+
         res_release_t_1 = resRelease;
-        MFVarSetFloat(_MDOutDischMaxID,         itemID, discharge_max);
-        MFVarSetFloat(_MDOutDischMinID,         itemID, discharge_min);
-        MFVarSetFloat(_MDOutReleaseMaxID,       itemID, release_max);
-        MFVarSetFloat(_MDOutReleaseMinID,       itemID, release_min);
+
         MFVarSetFloat(_MDOutResReleaseID,       itemID, resRelease);
-        MFVarSetFloat(_MDOutLastMonthID,        itemID, m);
         MFVarSetFloat(_MDOutDisch_t_3_ID,       itemID, discharge_t_2);   //You Should Set t-2 before t-1
         MFVarSetFloat(_MDOutDisch_t_2_ID,       itemID, discharge_t_1);   //You Should Set t-2 before t-1
         MFVarSetFloat(_MDOutResRelease_t_3_ID,  itemID, res_release_t_2); //You Should Set t-2 before t-1
@@ -468,13 +402,6 @@ int MDReservoirDef() {
                     ((_MDOutDisch_t_1_ID        = MFVarGetID(MDVarDisch_t_1_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutDisch_t_2_ID        = MFVarGetID(MDVarDisch_t_2_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutDisch_t_3_ID        = MFVarGetID(MDVarDisch_t_3_,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
-                    ((_MDOutDischMinID          = MFVarGetID(MDVarDischMin,               "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
-                    ((_MDOutDischMaxID          = MFVarGetID(MDVarDischMax,               "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
-                    ((_MDOutReleaseMinID        = MFVarGetID(MDVarReleaseMin,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
-                    ((_MDOutReleaseMaxID        = MFVarGetID(MDVarReleaseMax,             "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
-                    ((_MDOutLastMonthID         = MFVarGetID(MDVarLastMonth,              "m"   , MFOutput, MFState, MFInitial)) == CMfailed) ||
-                    ((_MDOutMonthToDayInFlowID  = MFVarGetID(MDVarMonthToDayInFlow,       "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
-                    ((_MDOutMonthToDayReleaseID = MFVarGetID(MDVarMonthToDayRelease,      "m3/s", MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutResStorageID        = MFVarGetID(MDVarReservoirStorage,       "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutPreResStorageID     = MFVarGetID(MDVarPreResStorage,          "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) ||
                     ((_MDOutResStorageChgID     = MFVarGetID(MDVarReservoirStorageChange, "m3"  , MFOutput, MFState, MFInitial)) == CMfailed) || 
