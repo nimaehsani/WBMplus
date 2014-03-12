@@ -39,7 +39,7 @@ static void _MDRainInfiltrationSimple (int itemID) {
 	infiltration = surplus *_MDInfiltrationFrac;
 	MFVarSetFloat (_MDOutRainSurfRunoffID,       itemID, surfRunoff);
 	MFVarSetFloat (_MDOutRainInfiltrationID,     itemID, infiltration);
-//	printf("Infiltraction %f surfRunoff %f \n",infiltration,surfRunoff);
+//	printf("Gamma = %f, Infiltraction %f surfRunoff %f \n",_MDInfiltrationFrac, infiltration,surfRunoff);
 }
 static void _MDRainInfiltrationSaturation (int itemID){
 		MFVarSetFloat (_MDOutRainSurfRunoffID,       itemID, MFVarGetFloat(_MDInSaturationExcessRunoffID, itemID,0.0));
@@ -57,6 +57,7 @@ int MDRainInfiltrationDef () {
 	//printf ("THE framework = greatest time sink ever invented\n");
 	if (_MDOutRainInfiltrationID != MFUnset) return (_MDOutRainInfiltrationID);
 
+	if (((optStr = MFOptionGet (MDParInfiltrationFrac))  != (char *) NULL) && (sscanf (optStr,"%f",&par) == 1)) _MDInfiltrationFrac = par;		//RJS 082812, Gamma wasn't read in until this edit
 	
 	const char *soilMoistureOptions [] = { "bucket", "layers", (char *) NULL };
 		int soilMoistureOptionID;
@@ -98,6 +99,7 @@ int MDRainInfiltrationDef () {
 			break;
 		case MDSpatially:
 			_MDInfiltrationFractionID = MFVarGetID (MDParInfiltrationFracSpatial, "mm", MFInput, MFState, MFBoundary);
+			break;		// RJS 082812
 		case MDsimple:
 		case MDvarying:
 			if ((_MDInRainWaterSurplusID = MDRainWaterSurplusDef ()) == CMfailed) return (CMfailed);

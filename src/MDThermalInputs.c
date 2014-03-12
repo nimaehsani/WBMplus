@@ -981,7 +981,7 @@ int MDThermalInputsDef () {
 	MFDefEntering ("Thermal Inputs");
 	switch (optID) {
 		case MDinput:
-			if (((_MDPlaceHolderID         = MDWTempRiverRouteDef ()) == CMfailed) ||
+			if (((_MDPlaceHolderID          = MDWTempRiverRouteDef ()) == CMfailed) ||
 				((_MDInDischargeID          = MDDischLevel2Def ()) == CMfailed) ||
 				((_MDInDischargeIncomingID  = MFVarGetID (MDVarDischarge0,          "m3/s", MFInput,  MFFlux,  MFBoundary)) == CMfailed) ||
 				((_MDFluxMixing_QxTID       = MFVarGetID (MDVarFluxMixing_QxT, "m3*degC/d", MFRoute,  MFFlux,  MFBoundary)) == CMfailed)   ||

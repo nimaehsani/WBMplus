@@ -59,6 +59,7 @@ static void _MDDischLevel2 (int itemID) {
 		MFVarSetFloat (_MDOutIrrUptakeExcessID, itemID, irrUptakeExcess);
 		discharge = discharge_mm * MFModelGetArea (itemID) / (1000.0 * MFModelGet_dt ());
 	}
+//	if (itemID == 1224 || itemID == 531) printf("**DischLevel2** itemID = %d, day=%d, discharge = %f\n", itemID, MFDateGetCurrentDay(), discharge);		// RJS 030113
 	MFVarSetFloat (_MDOutDischLevel2ID,  itemID, discharge);
 }
 

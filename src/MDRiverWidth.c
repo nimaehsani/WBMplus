@@ -60,6 +60,7 @@ static void _MDRiverWidth (int itemID) {
 		width = pow (((shapeExp + 1.0) * area) / (shapeExp * alpha), 1.0 / (shapeExp + 1));
 		depth = alpha * pow (width, shapeExp);
 	}
+
 	MFVarSetFloat (_MDOutRiverDepthID,   itemID, depth);
 	MFVarSetFloat (_MDOutRiverWidthID,   itemID, width);
 }

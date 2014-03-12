@@ -94,9 +94,9 @@ static void _MDIrrGrossDemand (int itemID) {
 	float cropFraction [_MDNumberOfIrrCrops+1];
 	float snowpackChg = 0;
 	int seasStart[3];
-   float dailyPercolation;
-   float wltPnt;
-   float fldCap;
+    float dailyPercolation;
+    float wltPnt;
+    float fldCap;
 //Output:
 	float totalNetIrrDemand   = 0.0;
 	float totalIrrPercolation = 0.0;
@@ -104,7 +104,7 @@ static void _MDIrrGrossDemand (int itemID) {
 	int i;
 	float ReqpondingDepth ;
 	float pondingDepth;
-        float irrIntensity;
+    float irrIntensity;
 	float cropDepletionFactor;
 	float meanSMChange;
 	float meanSMoist;
@@ -245,9 +245,7 @@ static void _MDIrrGrossDemand (int itemID) {
 
 		for (i = 0; i < _MDNumberOfIrrCrops; i++) croppedArea+=cropFraction[i];
 
-	 	if (fabs ((croppedArea +cropFraction[_MDNumberOfIrrCrops] -1)) > 0.0001)
-			printf ("Cropped  %f bare %f \n", croppedArea ,cropFraction[_MDNumberOfIrrCrops]);
-
+	 	if (fabs ((croppedArea +cropFraction[_MDNumberOfIrrCrops] -1)) > 0.0001) printf ("Cropped  %f bare %f \n", croppedArea ,cropFraction[_MDNumberOfIrrCrops]);
 		for (i = 0; i < _MDNumberOfIrrCrops; i++) {
 			netIrrDemand=0;cropWR=0;deepPercolation=0;smChange=0;
 			relCropFraction   = cropFraction[i];
@@ -281,8 +279,7 @@ static void _MDIrrGrossDemand (int itemID) {
 						smChange=curDepl-prevSoilMstDepl;
 						deepPercolation+=dailyPercolation;
 						riceWaterBalance=dailyEffPrecip+netIrrDemand-cropWR-deepPercolation-smChange;
-						if (fabs (riceWaterBalance) > 0.0001)
-							printf ("RiceWaterBalance %f prevSMM %f smChange %f cropWR %f \n",riceWaterBalance, prevSoilMstDepl,smChange,cropWR);
+						if (fabs (riceWaterBalance) > 0.0001) printf ("RiceWaterBalance %f prevSMM %f smChange %f cropWR %f \n",riceWaterBalance, prevSoilMstDepl,smChange,cropWR);
 					}
 					else {
 						totAvlWater  = (fldCap  -wltPnt) * rootDepth;

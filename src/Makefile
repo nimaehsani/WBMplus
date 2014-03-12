@@ -3,8 +3,12 @@ INC    = ../include
 SRC    = ../src
 OBJ    = ../obj
 BIN    = ../bin
+#CC     = gcc $(UNIXCCOPS) -I$(INC) -I../../CMlib/include -I../../MFlib/include
 CC     = gcc $(UNIXCCOPS) -I$(INC) -I$(GHAASDIR)/include
 LINK   = gcc
+#LIBS   = -L../../CMlib/lib -L../../MFlib/lib -lMF10 -lCM10 $(UNIXLIBS)
+#LIBS   = -L../../CMlib/lib -L../../MFlib/lib 
+
 LIBS   = -L$(GHAASDIR)/lib -lMF10 -lCM10 $(UNIXLIBS)
 
 TARGET = $(BIN)/wbmplus.bin
@@ -89,7 +93,20 @@ OBJS = $(OBJ)/WBMMain.o\
        $(OBJ)/MDWTempRiverRoute.o\
        $(OBJ)/MDWTempGrdWater.o\
        $(OBJ)/MDWTempSurfRunoff.o\
-       $(OBJ)/MDThermalInputs.o
+       $(OBJ)/MDThermalInputs.o\
+       $(OBJ)/MDWTempSurfRunoffPool.o\
+       $(OBJ)/MDSurfRunoffPool.o\
+       $(OBJ)/MDThermalInputs2.o\
+       $(OBJ)/MDEnergyDemand.o\
+       $(OBJ)/MDStormRunoff.o\
+       $(OBJ)/MDDO2.o\
+       $(OBJ)/MDThermalInputs3.o\
+       $(OBJ)/MDDIN.o\
+       $(OBJ)/MDNitrogenInputs.o\
+       $(OBJ)/MDWWTP.o\
+       $(OBJ)/MDIrrigation.o\
+       $(OBJ)/MDDOC.o
+       
 
 all: ${TARGET}
 

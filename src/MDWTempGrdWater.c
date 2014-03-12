@@ -83,23 +83,39 @@ static void _MDWTempGrdWater (int itemID) {
 	}
 
 	if (GrdWaterT > 100) printf("m = %d, d = %d, itemID = %d, GrdWaterT = %f, RainRechargeIn = %f\n", MFDateGetCurrentMonth (), MFDateGetCurrentDay (), itemID, GrdWaterT, RainRechargeIn);
-
+//	if (itemID == 486) printf("y = %d, m = %d, d = %d, GwT = %f, ReT = %f, AirT = %f, Recharge = %f, GW = %f\n", MFDateGetCurrentYear(), MFDateGetCurrentMonth(), MFDateGetCurrentDay(), GrdWaterT, RechargeT, airT, RainRechargeIn, GrdWaterStorage);
 
 }
 
+enum {MDcalculate, MDinput};																											// RJS 061312
 int MDWTempGrdWaterDef () {
+	int  optID = MDinput;																												// RJS 061312
+	const char *optStr, *optName = MDOptGrdWaterTemp;																					// RJS 061312
+	const char *options [] = { MDCalculateStr, MDInputStr,  (char *) NULL };															// RJS 061312
+
+	if ((optStr = MFOptionGet (optName)) != (char *) NULL) optID = CMoptLookup (options, optStr, true);									// RJS 061312
 
 	if (_MDOutWTempGrdWaterID != MFUnset) return (_MDOutWTempGrdWaterID);
 
 	MFDefEntering ("Groundwater temperature");
 
+	switch (optID) {																													// RJS 061312
+
+	case MDcalculate:																													// RJS 061312
+
 	if (((_MDInWTempSurfRunoffID = MDWTempSurfRunoffDef ()) == CMfailed) ||
 	    ((_MDInRainRechargeID    = MDRainInfiltrationDef ()) == CMfailed) ||
 	    ((_MDInIrrReturnFlowID   = MDIrrReturnFlowDef    ()) == CMfailed) ||
-	    ((_MDOutGrdWaterID         = MDBaseFlowDef         ()) == CMfailed) ||
+	    ((_MDOutGrdWaterID       = MDBaseFlowDef         ()) == CMfailed) ||
 	    ((_MDInAirTempID         = MFVarGetID (MDVarAirTemperature,  "degC", MFInput,  MFState, MFBoundary))  == CMfailed) ||
 	    ((_MDOutWTempGrdWaterID  = MFVarGetID (MDVarWTempGrdWater, "degC", MFOutput, MFState,  MFInitial)) == CMfailed) ||
 	    (MFModelAddFunction (_MDWTempGrdWater) == CMfailed)) return (CMfailed);
+	break;																																// RJS 061312
+
+	case MDinput:	_MDOutWTempGrdWaterID = MFVarGetID (MDVarWTempGrdWater, "degC", MFInput,  MFState, MFBoundary); break;				// RJS 061312	MFInitial changed to MFBoundary in order to read in																													// RJS 061312
+
+	default: MFOptionMessage (optName, optStr, options); return (CMfailed);																// RJS 061312
+	}																																	// RJS 061312
 
 	MFDefLeaving ("Groundwater temperature");
 	return (_MDOutWTempGrdWaterID);

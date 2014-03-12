@@ -97,7 +97,9 @@ static void _MDSPackChg (int itemID) {
 		MFVarSetFloat(_MDOutSnowDensityID,itemID,sDensity);  
 		MFVarSetFloat(_MDOutSnowDepthID,itemID, sDepth); 
 	//	printf ("Ende SnowPackChange \n");
-	
+
+//		if (itemID == 54914) printf("-- m = %d, d = %d, SF = %f, SM = %f, airT = %f, precip = %f, sPack = %f, sPackChg = %f\n", MFDateGetCurrentMonth(), MFDateGetCurrentDay(), _MDFallThreshold, _MDSnowMeltThreshold, airT, precip, sPack, sPackChg);
+
 }
 
 int MDSPackChgDef () {
