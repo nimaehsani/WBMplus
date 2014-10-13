@@ -1712,7 +1712,8 @@ int MDThermalInputs3Def () {
 				((_MDOutTotalHeatToEvapID     = MFVarGetID (MDVarHeatToEvap,           "GJ", MFOutput, MFFlux, MFBoundary)) == CMfailed) ||
 				((_MDOutCondenserInletID      = MFVarGetID (MDVarCondenserInlet,       "degC", MFOutput, MFState, MFBoundary)) == CMfailed) ||		// added 122112
 				((_MDOutSimEfficiencyID       = MFVarGetID (MDVarSimEfficiency,        "-", MFOutput, MFState, MFBoundary)) == CMfailed) ||			// added 122112
-				((_MDOutTotalHoursRunID       = MFVarGetID (MDVarTotalHoursRun,        "-", MFOutput, MFState, MFBoundary)) == CMfailed) ||			// added 030213
+				((_MDOutTotalHoursRunID       = MFVarGetID (MDVarTotalHoursRun,        "-", MFOutput, MFState, MFBoundary)) == CMfailed) ||	
+        ( MDWetBulbTempDef() == CMfailed) ||	
 				(MFModelAddFunction (_MDThermalInputs3) == CMfailed)) return (CMfailed);
 			break;
 		default: MFOptionMessage (optName, optStr, options); return (CMfailed);

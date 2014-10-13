@@ -105,6 +105,7 @@ OBJS = $(OBJ)/WBMMain.o\
        $(OBJ)/MDNitrogenInputs.o\
        $(OBJ)/MDWWTP.o\
        $(OBJ)/MDIrrigation.o\
+       $(OBJ)/MDWetBulbTemp.o\
        $(OBJ)/MDDOC.o
        
 

@@ -30,6 +30,7 @@ extern "C" {
 #define MDOptModel                           "Model"
 #define MDOptReservoirs                      "Reservoirs"
 #define MDOptHydroPower                     "HydroPower"
+#define MDOptWetBulbTemp                     "WetBulbTemp"   
 #define MDOptHydroElectricity                     "HydroElectricity"
 #define MDOptRiverbed                        "Riverbed"
 #define MDOptRunoff							 "RunoffSwitch"		//RJS 111710
@@ -356,8 +357,13 @@ extern "C" {
 #define MDVarHydroPower                     "HydroPower" 
 #define MDVarResH                       "ReservoirWaterLevel"    
     
-
-
+//Nima WetBulbTemp
+#define MDVarSpecificHumidity                     "SpecificHumidity"    
+#define MDVarAirPressure                     "AirPressure"
+#define MDVarWetBulbTemp                     "WetBulbTemperature"
+    
+    
+    
 #define MDVarRemovalOrder                    "RemovalOrder"                     // RJS 100213    
 
 #define MDVarRelHumidity                     "RelativeHumidity"
@@ -636,7 +642,7 @@ extern "C" {
 #define MDVarStorage_QxT                     "QxT_Storage"
 #define MDVarDeltaStorage_QxT                "QxT_DeltaStorage"
 
-#define MDVarWetBulbTemp					 "WetBulbTemp"			// RJS 062012
+// NIMA #define MDVarWetBulbTemp					 "WetBulbTemp"			// RJS 062012
 
 #define MDVarWTemp_QxT                       "QxT_WaterTemp"
 #define MDVarWTempDeltaT_QxT                 "QxT_deltaT"
@@ -821,6 +827,7 @@ int MDIrrUptakeRiverDef();
 int MDIrrUptakeGrdWaterDef();
 int MDReservoirDef();
 int MDHydroPowerDef();
+int MDWetBulbTempDef();
 int MDLandCoverDef();
 int MDLeafAreaIndexDef();
 int MDRainInfiltrationDef();
