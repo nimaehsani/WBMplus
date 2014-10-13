@@ -38,6 +38,11 @@ static void _MDSurfRunoffPool (int itemID) {
 	runoffPoolChg 		= runoffPool = MFVarGetFloat (_MDOutRunoffPoolID,   itemID, 0.0);
 	runoffPoolRecharge  = MFVarGetFloat (_MDInRainSurfRunoffID,  itemID, 0.0);
 	runoffPool          = runoffPool + runoffPoolRecharge;
+ 
+ //////////////////////////////////////////////////////////////
+ runoffPool                                           = 0;/////
+ //////////////////////////////////////////////////////////////
+ 
 
 	if (runoffPool > 0.0) {
 

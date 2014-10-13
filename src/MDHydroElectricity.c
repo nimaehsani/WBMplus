@@ -64,7 +64,7 @@ static void _MDHydroPower (int itemID) {
 *///////////////////////////////////////////////
 //////////////////////////////////////////////////
         float delta;
-        delta = resstorage+0.1*resCapacity;
+        delta = resstorage;
         //resH = resmaxH*delta/resCapacity;
         resH = resmaxH*sqrt(delta/resCapacity);
         
